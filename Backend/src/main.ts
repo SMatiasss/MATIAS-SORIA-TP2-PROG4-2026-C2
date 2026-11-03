@@ -17,4 +17,7 @@ async function bootstrap() {
   app.enableCors({ origin: process.env.FRONT_URL, exposedHeaders: ['X-Total-Count'] });
   await app.listen(process.env.PORT ?? 3000);
 }
-await bootstrap();
+bootstrap().catch((error) => {
+  console.error(error);
+  process.exit(1);
+});
