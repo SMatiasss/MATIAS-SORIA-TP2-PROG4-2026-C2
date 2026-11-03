@@ -18,16 +18,16 @@ export class Cargando {
   suscripcion?: Subscription;
 
   ngOnInit() {
-    // Sin token no hay nada que validar: va directo al login, sin mostrar un error.
+    // Sin token no hay nada que validar: va a la pantalla de inicio, sin mostrar un error.
     if (!localStorage.getItem('token')) {
-      this.router.navigateByUrl('/auth/login');
+      this.router.navigateByUrl('/auth');
       return;
     }
 
     this.suscripcion = this.auth.autorizar().subscribe({
       next: () => this.router.navigateByUrl('/publicaciones'),
       error: (error) => {
-        this.router.navigateByUrl('/auth/login');
+        this.router.navigateByUrl('/auth');
         this.modal.errorHttp(error, 'Tu sesión terminó');
       },
     });
