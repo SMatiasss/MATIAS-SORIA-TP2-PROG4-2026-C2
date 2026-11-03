@@ -1,0 +1,162 @@
+/* El padre ubica la estrella con left/top; --k (0 a 1) sale de los me gusta */
+:host {
+  --s: calc(10px + var(--k) * 36px);
+  --halo: calc(10px + var(--k) * 56px);
+  position: absolute;
+  z-index: 2;
+}
+
+.estrella {
+  position: absolute;
+  left: -22px;
+  top: -22px;
+  width: 44px;
+  height: 44px;
+  color: var(--texto);
+  text-decoration: none;
+}
+
+.estrella__punto {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--halo);
+  height: var(--halo);
+  translate: -50% -50%;
+  border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--malvavisco) calc(16% + var(--k) * 38%), transparent), transparent 70%);
+  opacity: calc(0.65 + var(--k) * 0.35);
+  transition: scale var(--transicion);
+}
+
+.estrella:hover .estrella__punto {
+  scale: 1.3;
+}
+
+.estrella svg {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--s);
+  height: var(--s);
+  translate: -50% -50%;
+  fill: var(--malvavisco);
+  filter: drop-shadow(0 0 calc(2px + var(--k) * 6px) var(--malvavisco));
+  animation: latir 4s ease-in-out infinite alternate;
+  animation-delay: calc(var(--i, 0) * -0.7s);
+}
+
+@keyframes latir {
+  to {
+    opacity: 0.72;
+  }
+}
+
+.estrella__nombre {
+  position: absolute;
+  left: 50%;
+  top: calc(22px + max(10px, var(--s) / 2 + 4px));
+  translate: -50% 0;
+  white-space: nowrap;
+  font-size: var(--fs-s);
+  font-weight: 600;
+  text-shadow: 0 1px 3px var(--noche), 0 0 8px var(--noche);
+}
+
+/* Por encima de las otras estrellas y de los botones de orden */
+:host(:hover) {
+  z-index: 5;
+}
+
+/* Tarjeta: aparece y se va en unos 150 ms. El padding transparente une la estrella con la tarjeta para poder entrar con el mouse */
+.tip {
+  position: absolute;
+  left: 0;
+  bottom: calc(var(--s) / 2);
+  padding-bottom: 10px;
+  opacity: 0;
+  pointer-events: none;
+  translate: -50% 8px;
+  scale: 0.92;
+  transform-origin: 50% 100%;
+  transition: opacity 110ms ease-in, translate 110ms ease-in, scale 110ms ease-in;
+}
+
+/* En las filas de más arriba la tarjeta va debajo del nombre, si no la tapan la barra y los botones */
+:host(.tip-abajo) .tip {
+  top: calc(22px + max(10px, var(--s) / 2 + 4px));
+  bottom: auto;
+  padding: 1.6rem 0 0;
+  translate: -50% -8px;
+  transform-origin: 50% 0;
+}
+
+:host(:hover) .tip {
+  opacity: 1;
+  pointer-events: auto;
+  translate: -50% 0;
+  scale: 1;
+  transition-duration: 150ms;
+  transition-timing-function: cubic-bezier(0.2, 1.3, 0.4, 1);
+}
+
+.tip__tarjeta {
+  display: grid;
+  gap: var(--esp-2);
+  width: 14rem;
+  padding-bottom: var(--esp-3);
+  overflow: hidden;
+  border: 1px solid var(--borde);
+  border-radius: var(--radio-control);
+  background: var(--noche);
+  box-shadow: 0 10px 30px var(--velo);
+}
+
+.tip img {
+  width: 100%;
+  aspect-ratio: 2 / 1;
+  object-fit: cover;
+  border-bottom: 1px solid var(--borde);
+}
+
+.tip__titulo,
+.tip__acciones {
+  padding-inline: var(--esp-3);
+}
+
+.tip__titulo {
+  padding-top: var(--esp-2);
+  font-weight: 800;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+
+.tip__tarjeta--foto .tip__titulo {
+  padding-top: 0;
+}
+
+.tip__acciones {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-3);
+  font-size: var(--fs-s);
+}
+
+.tip__eliminar {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--brasa);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.tip__eliminar:hover {
+  text-decoration: underline;
+}
+
+.tip__leer {
+  margin-left: auto;
+  font-weight: 700;
+}

@@ -1,0 +1,22 @@
+# dependencias y builds
+node_modules/
+dist/
+.angular/
+.nx/
+*.tsbuildinfo
+
+# secretos y config local
+.env
+.env.*
+!.env.example
+
+# logs y sistema
+*.log
+npm-debug.log*
+.DS_Store
+Thumbs.db
+
+# editor
+.idea/
+.vscode/*
+!.vscode/extensions.json

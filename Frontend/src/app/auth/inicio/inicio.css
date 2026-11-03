@@ -1,0 +1,477 @@
+:host {
+  display: block;
+}
+
+/* Ocupa toda la pantalla: sin sesión no hay barra de navegación. */
+.escena {
+  --dur: 0.8s;
+  --des: 0.68s;
+  container-type: size;
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--noche);
+}
+
+/* El mundo tiene la proporción de la imagen (1916 × 821): las posiciones son en píxeles de esa imagen. */
+.mundo {
+  --w: max(100cqw, 233.2cqh);
+  --slide: min(26cqw, calc((var(--w) - 100cqw) / 2));
+  position: absolute;
+  inset: 0;
+  transition: transform 0.9s cubic-bezier(0.5, 0, 0.2, 1);
+}
+
+.mundo__interior {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: var(--w);
+  aspect-ratio: 1916 / 821;
+  transform: translateX(-50%);
+}
+
+/* Con un formulario abierto, el mundo se corre para dejarle lugar al panel */
+.con-panel .mundo {
+  transform: translateX(calc(-1 * var(--slide)));
+}
+
+.fondo,
+.fondo-luz,
+.fogata img,
+.lengua {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.vivo .fondo {
+  visibility: hidden;
+  transition: visibility 0s linear calc(var(--dur) + 0.05s);
+}
+
+.fondo-luz {
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+.vivo .fondo-luz {
+  opacity: 1;
+  transition-duration: var(--dur);
+}
+
+.desinflando .fondo-luz {
+  opacity: 0;
+  transition-duration: var(--des);
+}
+
+.sombra {
+  position: absolute;
+  left: 50%;
+  bottom: -5%;
+  width: 118%;
+  height: 26%;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.35) 45%, transparent 70%);
+}
+
+.carpa {
+  position: absolute;
+  left: calc(975 / 1916 * 100%);
+  bottom: calc(316 / 821 * 100%);
+  width: calc(450 / 1916 * 100%);
+  aspect-ratio: 1100 / 530;
+  transform-origin: 50% 100%;
+}
+
+.cuadros {
+  position: absolute;
+  inset: 0;
+  transform-origin: 50% 100%;
+}
+
+.cuadro {
+  --s: calc(var(--dur) / 16);
+  --sd: calc(var(--des) / 16);
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  display: block;
+  width: 100%;
+  visibility: hidden;
+}
+
+.desinflado .cuadro--inicio {
+  visibility: visible;
+}
+
+/* Inflar y desinflar usan animaciones con distinto nombre para que se reinicien al cambiar de fase. */
+.vivo .cuadro {
+  animation: cuadro-inflar var(--s) step-end calc(var(--s) * var(--i)) forwards;
+}
+
+.vivo .cuadro--fin {
+  animation: quedar-inflada var(--s) step-start calc(var(--s) * 15) forwards;
+}
+
+.desinflando .cuadro {
+  animation: cuadro-desinflar var(--sd) step-end calc(var(--sd) * (15 - var(--i))) forwards;
+}
+
+.desinflando .cuadro--inicio {
+  animation: quedar-desinflada var(--sd) step-start calc(var(--sd) * 15) forwards;
+}
+
+.escena:has(.boton-inflar:hover) .cuadros {
+  animation: temblar 0.35s ease-in-out;
+}
+
+.boton-inflar {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 62%;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+}
+
+.fogata {
+  position: absolute;
+  left: calc(837 / 1916 * 100%);
+  bottom: calc(306 / 821 * 100%);
+  width: calc(196 / 1916 * 100%);
+  aspect-ratio: 640 / 388;
+  transform-origin: 50% 100%;
+  pointer-events: none;
+}
+
+.fogata__luz {
+  opacity: 0;
+  transition: opacity 0.7s;
+}
+
+.vivo .fogata__luz {
+  opacity: 1;
+  transition-duration: 0.3s;
+  animation: parpadeo 1.3s ease-in-out 0.4s infinite alternate;
+}
+
+.desinflando .fogata__luz {
+  opacity: 0;
+  transition-duration: 0.5s;
+}
+
+.llamas {
+  position: absolute;
+  left: calc(858 / 1916 * 100%);
+  bottom: calc(340 / 821 * 100%);
+  width: calc(154 / 1916 * 100%);
+  aspect-ratio: 200 / 240;
+  transform-origin: 50% 100%;
+  opacity: 0;
+  transform: scale(0);
+  pointer-events: none;
+  transition:
+    opacity 0.35s ease-out,
+    transform 0.35s cubic-bezier(0.2, 1.6, 0.4, 1);
+}
+
+.vivo .llamas {
+  opacity: 1;
+  transform: none;
+}
+
+.desinflando .llamas {
+  opacity: 0;
+  transform: scale(0.2, 0);
+  transition:
+    opacity 0.45s ease-in,
+    transform 0.45s ease-in;
+}
+
+.llamas__defs {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+.brillo {
+  position: absolute;
+  left: 50%;
+  bottom: -18%;
+  width: 300%;
+  height: 130%;
+  transform: translateX(-50%);
+  background: radial-gradient(
+    closest-side,
+    color-mix(in srgb, var(--fuego) 42%, transparent),
+    color-mix(in srgb, var(--fuego) 12%, transparent) 55%,
+    transparent 100%
+  );
+}
+
+.vivo .brillo {
+  animation: latir 1.6s ease-in-out 0.35s infinite alternate;
+}
+
+.lengua {
+  overflow: visible;
+  transform-origin: 50% 99.2%;
+}
+
+.lengua--2 {
+  transform-origin: 31.2% 99.2%;
+}
+
+.lengua--3 {
+  transform-origin: 69.8% 99.2%;
+}
+
+.vivo .lengua--1 {
+  animation: lengua-1 0.9s ease-in-out 0.35s infinite alternate;
+}
+
+.vivo .lengua--2 {
+  animation: lengua-2 1.1s ease-in-out 0.35s infinite alternate;
+}
+
+.vivo .lengua--3 {
+  animation: lengua-3 0.8s ease-in-out 0.35s infinite alternate;
+}
+
+.vivo .lengua--4 {
+  animation: lengua-1 0.7s ease-in-out 0.35s infinite alternate;
+}
+
+.chispa {
+  position: absolute;
+  bottom: 30%;
+  left: calc(50% + var(--x));
+  width: 3.2%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--malvavisco);
+  box-shadow: 0 0 6px 2px var(--fuego);
+  opacity: 0;
+}
+
+.vivo .chispa {
+  animation: chispa var(--t) ease-out var(--d) infinite;
+}
+
+.humo {
+  position: absolute;
+  left: calc(921 / 1916 * 100%);
+  bottom: calc(340 / 821 * 100%);
+  width: calc(34 / 1916 * 100%);
+  aspect-ratio: 1 / 3;
+  opacity: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at 50% 80%,
+    color-mix(in srgb, var(--luna) 25%, transparent),
+    color-mix(in srgb, var(--luna) 8%, transparent) 35%,
+    transparent 62%
+  );
+}
+
+.humo--2 {
+  left: calc(932 / 1916 * 100%);
+}
+
+.desinflado .humo {
+  animation: subir 3.6s ease-in infinite;
+}
+
+.desinflado .humo--2 {
+  animation-delay: 1.7s;
+}
+
+/* Capas de texto sobre la escena: aparecen y desaparecen con la fase */
+.capa {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease,
+    visibility 0s 0.3s;
+}
+
+.capa--visible {
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity 0.4s ease,
+    transform 0.4s cubic-bezier(0.2, 0.9, 0.3, 1),
+    visibility 0s;
+}
+
+.capa--titular {
+  transform: translateY(-14px);
+}
+
+.capa--titular.capa--visible {
+  transform: none;
+  transition-delay: 0.3s, 0.3s, 0s;
+}
+
+.titular {
+  position: absolute;
+  top: 14%;
+  left: 6vw;
+  max-width: min(44vw, 42rem);
+}
+
+.titular h1 {
+  font-size: var(--fs-xxl);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.titular__bajada {
+  margin-top: var(--esp-4);
+  color: var(--luna);
+  font-size: var(--fs-m);
+}
+
+/* Acá entra el login o el registro (rutas hijas). */
+.capa--panel {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: var(--gutter) 5% var(--gutter) var(--gutter);
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Animaciones de la escena de inicio (carpa, fogata, chispas y humo) */
+@keyframes temblar {
+  0%,
+  100% {
+    transform: translateX(0) scale(1, 1);
+  }
+  25% {
+    transform: translateX(-1.2%) scale(1.01, 1.08);
+  }
+  75% {
+    transform: translateX(1.2%) scale(0.99, 1.05);
+  }
+}
+
+@keyframes cuadro-inflar {
+  from {
+    visibility: visible;
+  }
+  to {
+    visibility: hidden;
+  }
+}
+
+@keyframes cuadro-desinflar {
+  from {
+    visibility: visible;
+  }
+  to {
+    visibility: hidden;
+  }
+}
+
+@keyframes quedar-inflada {
+  from,
+  to {
+    visibility: visible;
+  }
+}
+
+@keyframes quedar-desinflada {
+  from,
+  to {
+    visibility: visible;
+  }
+}
+
+@keyframes parpadeo {
+  from {
+    opacity: 0.84;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes latir {
+  from {
+    opacity: 0.7;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes lengua-1 {
+  0% {
+    transform: scale(1, 1) skewX(0);
+  }
+  50% {
+    transform: scale(0.94, 1.08) skewX(2.5deg);
+  }
+  100% {
+    transform: scale(1.04, 0.94) skewX(-2deg);
+  }
+}
+
+@keyframes lengua-2 {
+  0% {
+    transform: scale(1, 1) skewX(0);
+  }
+  100% {
+    transform: scale(0.9, 1.14) skewX(-4deg);
+  }
+}
+
+@keyframes lengua-3 {
+  0% {
+    transform: scale(1, 0.96) skewX(2deg);
+  }
+  100% {
+    transform: scale(1.06, 1.1) skewX(4deg);
+  }
+}
+
+@keyframes chispa {
+  0% {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--dx), -4500%);
+    opacity: 0;
+  }
+}
+
+@keyframes subir {
+  0% {
+    transform: translateY(10%) scale(0.8);
+    opacity: 0;
+  }
+  30% {
+    opacity: 0.55;
+  }
+  100% {
+    transform: translateY(-70%) scale(1.5);
+    opacity: 0;
+  }
+}

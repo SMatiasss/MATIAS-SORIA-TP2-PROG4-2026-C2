@@ -1,0 +1,24 @@
+<a class="estrella" [routerLink]="['/publicaciones', historia()._id]">
+  <span class="estrella__punto">
+    <svg viewBox="-50 -50 100 100">
+      <path d="M0-50C3.5-12 12-3.5 50 0C12 3.5 3.5 12 0 50C-3.5 12-12 3.5-50 0C-12-3.5-3.5-12 0-50Z" />
+    </svg>
+  </span>
+  <span class="estrella__nombre">{{ historia().autor.nombreUsuario }}</span>
+</a>
+
+<div class="tip">
+  <div class="tip__tarjeta" [class.tip__tarjeta--foto]="historia().imagenUrl">
+    @if (servicio.imagen(historia()); as url) {
+      <img [src]="url" />
+    }
+    <span class="tip__titulo">{{ historia().titulo }}</span>
+    <div class="tip__acciones">
+      <app-me-gusta [historia]="historia()" (cambio)="cambio.emit($event)" />
+      @if (servicio.esMia(historia())) {
+        <button type="button" class="tip__eliminar" (click)="eliminar.emit(historia())">Eliminar</button>
+      }
+      <a class="tip__leer" [routerLink]="['/publicaciones', historia()._id]">Leer →</a>
+    </div>
+  </div>
+</div>

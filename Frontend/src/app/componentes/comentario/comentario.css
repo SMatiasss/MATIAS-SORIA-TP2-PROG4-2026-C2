@@ -1,0 +1,68 @@
+/* Cada comentario está escrito en birome roja; cada línea mide un renglón (--fila) */
+:host {
+  display: block;
+  position: relative;
+  animation: aparece 0.5s ease;
+}
+
+.comentario__cabecera {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-2);
+  min-width: 0;
+  height: var(--fila);
+  white-space: nowrap;
+}
+
+.comentario__usuario {
+  overflow: hidden;
+  color: var(--tinta-birome);
+  font: 700 15px / var(--fila) var(--fuente-papel);
+  text-overflow: ellipsis;
+}
+
+.comentario__editado {
+  color: var(--tinta-suave);
+  font: 13px / var(--fila) var(--fuente-papel);
+}
+
+.comentario__editar {
+  height: 24px;
+  padding: 0 var(--esp-2);
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--tinta-suave);
+  font: 600 13px var(--fuente);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.comentario__editar:hover {
+  background: var(--birome-hover);
+  color: var(--tinta-birome);
+}
+
+.comentario__texto {
+  padding-left: 32px;
+  color: var(--tinta-birome);
+  font: 16px / var(--fila) var(--fuente-papel);
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+
+.comentario__edicion {
+  padding-left: 32px;
+}
+
+@keyframes aparece {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+.comentario__fecha {
+  margin-left: auto;
+}

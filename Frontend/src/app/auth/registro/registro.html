@@ -1,0 +1,86 @@
+<div class="cuaderno agujeros">
+  <a class="panel__volver" routerLink="/auth">← Volver al campamento</a>
+
+  <header class="encabezado">
+    <h1>Sumarme al campamento</h1>
+    <p>Creá tu cuenta</p>
+  </header>
+
+  <form class="formulario formulario--dos-columnas" [formGroup]="formulario" (ngSubmit)="registrar()">
+    <app-campo
+      idCampo="nombre"
+      etiqueta="Nombre"
+      autocompletar="given-name"
+      ayuda="Entre 3 y 20 caracteres."
+      [mensajes]="{ pattern: 'Tiene que tener entre 3 y 20 caracteres' }"
+      [control]="formulario.controls.nombre"
+    />
+    <app-campo
+      idCampo="apellido"
+      etiqueta="Apellido"
+      autocompletar="family-name"
+      ayuda="Entre 3 y 20 caracteres."
+      [mensajes]="{ pattern: 'Tiene que tener entre 3 y 20 caracteres' }"
+      [control]="formulario.controls.apellido"
+    />
+    <app-campo
+      idCampo="nombreUsuario"
+      etiqueta="Nombre de usuario"
+      autocompletar="username"
+      placeholder="tu.usuario"
+      [control]="formulario.controls.nombreUsuario"
+      [mensajes]="{ pattern: 'Solo se permiten letras, números, guion bajo (_) y punto (.), sin espacios' }"
+    />
+    <app-campo
+      idCampo="fechaNacimiento"
+      etiqueta="Fecha de nacimiento"
+      tipo="date"
+      autocompletar="bday"
+      ayuda="Tenés que tener al menos 13 años."
+      [min]="fechaMinima"
+      [max]="fechaMaxima"
+      [control]="formulario.controls.fechaNacimiento"
+    />
+    <app-campo
+      idCampo="correo"
+      etiqueta="Correo"
+      tipo="email"
+      autocompletar="email"
+      placeholder="nombre@correo.com"
+      [control]="formulario.controls.correo"
+    />
+    <app-campo-imagen idCampo="imagen" etiqueta="Foto de perfil (opcional)" [control]="formulario.controls.imagen" [perfil]="true" />
+
+    <app-campo
+      idCampo="contrasena"
+      etiqueta="Contraseña"
+      tipo="password"
+      autocompletar="new-password"
+      ayuda="Al menos 8 caracteres, una mayúscula y un número."
+      [control]="formulario.controls.contrasena"
+    />
+    <app-campo
+      idCampo="repetirContrasena"
+      etiqueta="Repetir contraseña"
+      tipo="password"
+      autocompletar="new-password"
+      [control]="formulario.controls.repetirContrasena"
+    />
+
+    <app-campo
+      class="completo"
+      idCampo="descripcion"
+      etiqueta="Descripción breve (opcional)"
+      placeholder="Contanos algo sobre vos"
+      [multilinea]="true"
+      [limite]="200"
+      [control]="formulario.controls.descripcion"
+    />
+
+    <button type="submit" class="boton boton--completo" [class.cargando]="enviando()" [disabled]="enviando()">
+      {{ enviando() ? 'Creando tu cuenta…' : 'Sumarme' }}
+    </button>
+  </form>
+
+  <p class="panel__pie">¿Ya tenés carpa? <a routerLink="/auth/login">Acampar</a></p>
+</div>

@@ -1,0 +1,48 @@
+<dialog
+  #dialogo
+  class="modal"
+  [class.modal--error]="servicio.estado()?.tipo !== 'exito'"
+  (close)="alCerrar()"
+>
+  @if (servicio.estado(); as modal) {
+    <svg class="modal__icono" viewBox="0 0 24 24">
+      @if (modal.tipo !== 'exito') {
+        <path d="M12 7v6M12 16.5v.5" />
+      } @else {
+        <path d="m6.5 12.5 3.5 3.5 7.5-8" />
+      }
+    </svg>
+
+    <h2 class="modal__titulo">{{ modal.titulo }}</h2>
+
+    <div class="modal__mensaje">
+      @if (lista(modal.mensaje); as mensajes) {
+        <ul>
+          @for (mensaje of mensajes; track mensaje) {
+            <li>{{ mensaje }}</li>
+          }
+        </ul>
+      } @else {
+        <p>{{ modal.mensaje }}</p>
+      }
+    </div>
+
+    @if (modal.tipo === 'confirmar') {
+      <div class="modal__botones">
+        <button type="button" class="boton boton--secundario" (click)="servicio.cerrar()">Cancelar</button>
+        <button type="button" class="boton boton--peligro" (click)="servicio.aceptar()">
+          {{ modal.textoBoton }}
+        </button>
+      </div>
+    } @else {
+      <button
+        type="button"
+        class="boton boton--completo"
+        [class.boton--peligro]="modal.tipo === 'error'"
+        (click)="servicio.cerrar()"
+      >
+        {{ modal.tipo === 'error' ? 'Entendido' : 'Continuar' }}
+      </button>
+    }
+  }
+</dialog>

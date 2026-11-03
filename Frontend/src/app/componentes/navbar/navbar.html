@@ -1,0 +1,28 @@
+<header class="barra">
+  <div class="barra__interior">
+    <a class="marca" routerLink="/publicaciones">
+      <img class="marca__icono" src="favicon.svg" />
+      <span>YuruCamp</span>
+    </a>
+
+    <nav class="barra__nav">
+      <ul class="barra__enlaces">
+        <li>
+          <a routerLink="/publicaciones" routerLinkActive="activo">Historias</a>
+        </li>
+      </ul>
+
+      <div class="barra__sesion">
+        @if (auth.usuario(); as usuario) {
+          <a class="barra__usuario" routerLink="/mi-perfil" routerLinkActive="activo" title="Mi perfil">
+            <app-avatar [imagenUrl]="usuario.imagenUrl" [tamano]="32" />
+            {{ usuario.nombreUsuario }}
+          </a>
+          <button type="button" class="boton boton--secundario boton--chico" title="Cerrar sesión" (click)="auth.cerrarSesion()">
+            Desarmar la carpa
+          </button>
+        }
+      </div>
+    </nav>
+  </div>
+</header>

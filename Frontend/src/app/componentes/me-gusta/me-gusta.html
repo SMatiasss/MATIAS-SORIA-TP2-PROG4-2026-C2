@@ -1,0 +1,12 @@
+<button
+  type="button"
+  class="me-gusta"
+  [class.me-gusta--papel]="papel()"
+  [class.me-gusta--dado]="servicio.dioMeGusta(historia())"
+  [title]="servicio.dioMeGusta(historia()) ? 'Quitar me gusta' : 'Me gusta'"
+  [disabled]="enviando()"
+  (click)="alternar()"
+>
+  <svg class="malvavisco" [class.malvavisco--encendido]="servicio.dioMeGusta(historia())" viewBox="0 0 64 64"><path d="M23 9H41Q52 9 52 20V44Q52 55 41 55H23Q12 55 12 44V20Q12 9 23 9Z" /><path class="malvavisco__sombra" d="M13.6 46Q32 51 50.4 38V44Q50.4 53.4 41 53.4H23Q13.6 53.4 13.6 44Z" /><path class="malvavisco__arco" d="M18 20Q32 26 46 20" /></svg>
+  {{ historia().cantidadMeGusta }}@if (papel()) { me gusta}
+</button>

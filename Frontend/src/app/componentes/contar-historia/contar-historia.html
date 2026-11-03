@@ -1,0 +1,33 @@
+<div class="cuaderno agujeros">
+  <button type="button" class="panel__volver" (click)="cancelar.emit()">← Volver al cielo</button>
+
+  <header class="encabezado">
+    <h1>Contar una historia</h1>
+    <p>Publicá algo para el campamento: título, mensaje y, si querés, una foto</p>
+  </header>
+
+  <form class="formulario" [formGroup]="formulario" (ngSubmit)="contar()">
+    <app-campo
+      idCampo="titulo"
+      etiqueta="Título"
+      placeholder="Primera noche junto al lago"
+      [limite]="60"
+      [mensajes]="{ pattern: 'El título no puede quedar en blanco' }"
+      [control]="formulario.controls.titulo"
+    />
+    <app-campo
+      idCampo="mensaje"
+      etiqueta="Mensaje"
+      placeholder="¿Qué pasó en el campamento?"
+      [multilinea]="true"
+      [limite]="400"
+      [mensajes]="{ pattern: 'El mensaje no puede quedar en blanco' }"
+      [control]="formulario.controls.mensaje"
+    />
+    <app-campo-imagen idCampo="imagen" etiqueta="Foto (opcional)" [control]="formulario.controls.imagen" />
+
+    <button type="submit" class="boton boton--completo" [class.cargando]="enviando()" [disabled]="enviando()">
+      {{ enviando() ? 'Contando…' : 'Contar historia' }}
+    </button>
+  </form>
+</div>

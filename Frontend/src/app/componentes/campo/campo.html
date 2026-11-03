@@ -1,0 +1,36 @@
+<div class="campo" [class.campo--error]="error()">
+  <label class="campo__etiqueta" [for]="idCampo()">{{ etiqueta() }}</label>
+
+  @if (multilinea()) {
+    <textarea
+      class="campo__control"
+      [id]="idCampo()"
+      [formControl]="control()"
+      [placeholder]="placeholder()"
+    ></textarea>
+  } @else {
+    <input
+      class="campo__control"
+      [id]="idCampo()"
+      [type]="tipo()"
+      [formControl]="control()"
+      [placeholder]="placeholder()"
+      [attr.autocomplete]="autocompletar()"
+      [attr.min]="min()"
+      [attr.max]="max()"
+    />
+  }
+
+  <div class="campo__pie">
+    @if (error() || !ayuda()) {
+      <span class="campo__error">{{ error() }}</span>
+    } @else {
+      <span class="campo__ayuda">{{ ayuda() }}</span>
+    }
+    @if (limite(); as limite) {
+      <span class="contador" [class.contador--limite]="largo() > limite">
+        {{ largo() }}/{{ limite }}
+      </span>
+    }
+  </div>
+</div>

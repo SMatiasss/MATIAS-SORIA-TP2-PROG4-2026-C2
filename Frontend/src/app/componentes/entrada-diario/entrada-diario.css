@@ -1,0 +1,186 @@
+/* Cada pieza mide renglones enteros (--fila) para que el texto caiga sobre las líneas del papel.
+   --n (renglones de la entrada) y --fr (renglones de la foto grande) llegan desde Mi carpa. */
+:host {
+  display: block;
+  position: relative;
+}
+
+.entrada {
+  --msg: calc(var(--n) - 4);
+  --ancho-foto: clamp(120px, 30%, 190px);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: calc(var(--fila) * var(--n));
+  margin: 0 calc(-1 * var(--esp-2));
+  padding: 0 var(--esp-2);
+  border-radius: 6px;
+  color: var(--tinta);
+  text-decoration: none;
+  transition:
+    background var(--transicion),
+    box-shadow var(--transicion);
+}
+
+.entrada:hover {
+  color: var(--tinta);
+  background: var(--renglon-fondo);
+  box-shadow: inset 3px 0 0 var(--fuego);
+}
+
+.entrada > * {
+  flex-shrink: 0;
+}
+
+
+/* Título en un renglón: el completo se lee en la publicación */
+.entrada__titulo {
+  width: fit-content;
+  max-width: 100%;
+  margin-left: calc(-1 * var(--esp-1));
+  padding-inline: var(--esp-1);
+  border-radius: 4px;
+  background: var(--resaltado);
+  font: 700 17px / var(--fila) var(--fuente-papel);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.entrada--grande .entrada__titulo {
+  font-size: 20px;
+}
+
+.entrada__mensaje {
+  max-height: calc(var(--fila) * var(--msg));
+  font: 15px / var(--fila) var(--fuente-papel);
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: var(--msg);
+}
+
+.entrada__pie {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--esp-2);
+  height: var(--fila);
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.me-gusta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--esp-1);
+  color: var(--tinta-suave);
+}
+
+.me-gusta svg {
+  width: 18px;
+  height: 18px;
+}
+
+.entrada__abrir {
+  opacity: 0;
+  translate: -4px 0;
+  transition:
+    opacity var(--transicion),
+    translate var(--transicion);
+}
+
+.entrada:hover .entrada__abrir {
+  opacity: 1;
+  translate: 0;
+  color: var(--fuego-relieve);
+}
+
+.entrada__comentarios {
+  height: var(--fila);
+  margin-top: auto;
+  background: repeating-linear-gradient(90deg, var(--tinta-suave) 0 4px, transparent 4px 8px) top / 100% 1px no-repeat;
+  font-size: 12px;
+  color: var(--tinta-birome);
+}
+
+.entrada__comentario {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: var(--fila);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.entrada__comentario span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.entrada__comentario strong {
+  font-style: normal;
+}
+
+.entrada__mas {
+  flex: none;
+  margin-left: auto;
+  color: var(--tinta-suave);
+}
+
+.entrada__comentario svg {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+}
+
+.entrada__foto {
+  position: relative;
+  height: calc(var(--fila) * var(--fr));
+  margin: 0;
+  padding: 10px 6px;
+}
+
+.entrada__foto .foto-pegada {
+  --esquinero: 20px;
+  height: 100%;
+}
+
+.cinta {
+  position: absolute;
+  z-index: 1;
+  top: 2px;
+  left: 50%;
+  width: 64px;
+  height: 20px;
+  margin-left: -32px;
+  background: var(--cinta);
+  rotate: -3deg;
+}
+
+.entrada--grande.tiene-foto {
+  --msg: calc(var(--n) - 4 - var(--fr));
+}
+
+.entrada:not(.entrada--grande).tiene-foto {
+  padding-right: calc(var(--ancho-foto) + 22px);
+}
+
+.entrada:not(.entrada--grande) .entrada__foto {
+  --fr: 4;
+  position: absolute;
+  right: var(--esp-2);
+  top: var(--fila);
+  width: var(--ancho-foto);
+  padding: 12px 0 8px;
+}
+
+.entrada:not(.entrada--grande).tiene-foto :is(.entrada__pie, .entrada__comentarios) {
+  margin-right: calc(-1 * (var(--ancho-foto) + 14px));
+}

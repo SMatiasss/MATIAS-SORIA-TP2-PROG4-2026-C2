@@ -1,0 +1,26 @@
+<div class="comentario__cabecera">
+  <app-avatar [imagenUrl]="comentario().autor.imagenUrl" [tamano]="24" />
+  <span class="comentario__usuario">&#64;{{ comentario().autor.nombreUsuario }}</span>
+  <span class="fecha comentario__fecha">{{ comentario().createdAt | date: 'dd/MM/yyyy HH:mm' }}</span>
+  @if (comentario().modificado) {
+    <span class="comentario__editado">(editado)</span>
+  }
+  @if (esMio() && !editando()) {
+    <button type="button" class="comentario__editar" title="Editar tu comentario" (click)="editar()">Editar</button>
+  }
+</div>
+
+@if (editando()) {
+  <form class="comentario__edicion" [formGroup]="formulario" (ngSubmit)="guardar()">
+    <textarea class="campo__control" formControlName="mensaje" maxlength="200"></textarea>
+    <div class="escrito-pie">
+      <span class="contador" [class.contador--limite]="largo() === 200">{{ largo() }}/200</span>
+      <button type="button" class="boton-papel boton-papel--suave" (click)="editando.set(false)">Cancelar</button>
+      <button type="submit" class="boton-papel boton-papel--fuego" [disabled]="formulario.invalid || enviando()">
+        {{ enviando() ? 'Guardando…' : 'Guardar' }}
+      </button>
+    </div>
+  </form>
+} @else {
+  <p class="comentario__texto">{{ comentario().mensaje }}</p>
+}

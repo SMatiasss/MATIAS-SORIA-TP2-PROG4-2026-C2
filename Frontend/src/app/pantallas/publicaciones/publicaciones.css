@@ -1,0 +1,232 @@
+.escena {
+  --astro-d: 360px;
+  /* Radio de los números: la franja lisa del anillo */
+  --astro-r: calc(var(--astro-d) * 0.37);
+  position: relative;
+  height: 100vh;
+  min-height: 40rem;
+  margin-top: calc(-1 * (var(--alto-barra) + 1px));
+  overflow: hidden;
+  background: var(--noche) url('/escena/publicaciones/cielo-fondo.webp') center bottom / cover no-repeat;
+}
+
+.cabecera {
+  position: absolute;
+  left: var(--esp-6);
+  top: calc(var(--alto-barra) + 1px + var(--esp-5));
+  max-width: 30rem;
+}
+
+.acciones {
+  position: absolute;
+  z-index: 4;
+  right: var(--esp-6);
+  top: calc(var(--alto-barra) + 1px + var(--esp-5));
+  display: grid;
+  justify-items: end;
+  gap: var(--esp-2);
+}
+
+.orden {
+  display: flex;
+  gap: var(--esp-1);
+}
+
+.orden .boton.activo {
+  background: var(--fuego);
+  border-color: var(--fuego);
+  color: var(--noche);
+  cursor: default;
+}
+
+.aviso {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  gap: var(--esp-2);
+  padding-bottom: 12rem;
+  text-align: center;
+  text-shadow: 0 1px 3px var(--noche), 0 0 12px var(--noche);
+  pointer-events: none;
+}
+
+.aviso p {
+  color: var(--luna);
+}
+
+.hoja {
+  width: var(--ancho-cuaderno);
+  max-width: none;
+  max-height: none;
+  padding: 14px 0 0;
+  overflow: visible;
+  border: 0;
+  background: none;
+  color: inherit;
+}
+
+.hoja::backdrop {
+  background: var(--velo);
+}
+
+.hoja app-contar-historia {
+  max-height: calc(100vh - 4rem);
+}
+
+/* Capa de estrellas: ocupa toda la escena para que las posiciones sean en % de la escena */
+.cielo {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.cielo app-estrella {
+  pointer-events: auto;
+}
+
+.cielo.sale {
+  animation: sale 420ms cubic-bezier(0.5, 0, 0.75, 0) forwards;
+}
+
+.cielo.entra {
+  animation: entra 540ms cubic-bezier(0.2, 0.8, 0.3, 1);
+}
+
+.cielo.atras.sale {
+  animation-name: sale-atras;
+}
+
+.cielo.atras.entra {
+  animation-name: entra-atras;
+}
+
+@keyframes sale {
+  to {
+    transform: translateX(-45%);
+    opacity: 0;
+  }
+}
+
+@keyframes entra {
+  from {
+    transform: translateX(45%);
+    opacity: 0;
+  }
+}
+
+@keyframes sale-atras {
+  to {
+    transform: translateX(45%);
+    opacity: 0;
+  }
+}
+
+@keyframes entra-atras {
+  from {
+    transform: translateX(-45%);
+    opacity: 0;
+  }
+}
+
+.astro {
+  position: absolute;
+  z-index: 1;
+  left: 50%;
+  bottom: 2.5rem;
+}
+
+.astro__disco {
+  position: absolute;
+  left: calc(var(--astro-d) / -2);
+  top: calc(var(--astro-d) / -2);
+  width: var(--astro-d);
+  height: var(--astro-d);
+}
+
+/* Proporciones tomadas de la imagen para que el círculo de madera coincida con el disco */
+.astro__img {
+  position: absolute;
+  max-width: none;
+  width: calc(var(--astro-d) * 1.1505);
+  left: calc(var(--astro-d) * -0.072);
+  top: calc(var(--astro-d) * -0.0584);
+}
+
+/* El anillo graduado y los números son lo único que gira */
+.astro__rueda {
+  position: absolute;
+  inset: 2.83%;
+  transition: rotate 650ms cubic-bezier(0.45, 0, 0.15, 1);
+}
+
+.astro__numero {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 2.75rem;
+  margin: -0.875rem 0 0 -1.375rem;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 900;
+  color: var(--madera-honda);
+  text-shadow: 0 1px 0 var(--madera-clara);
+  transform: rotate(var(--a)) translateY(calc(var(--astro-r) * -1));
+}
+
+.astro__numero.actual {
+  font-size: 1.4rem;
+}
+
+.astro__marca {
+  position: absolute;
+  left: -10px;
+  top: calc(var(--astro-d) / -2 - 8px);
+  border: 10px solid transparent;
+  border-top: 17px solid var(--fuego);
+  border-bottom: 0;
+  filter: drop-shadow(0 0 6px var(--fuego));
+}
+
+.astro__pagina {
+  position: absolute;
+  left: -5rem;
+  top: -4.4rem;
+  width: 10rem;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 900;
+  color: var(--malvavisco);
+  text-shadow: 0 1px 2px var(--noche), 0 2px 10px var(--noche);
+}
+
+.flecha {
+  position: absolute;
+  bottom: -6px;
+  width: 42px;
+  height: 42px;
+  margin-left: -21px;
+  padding-bottom: 3px;
+  border: 2px solid var(--madera-oscura);
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 35%, var(--madera-clara), var(--madera) 70%);
+  color: var(--madera-honda);
+  font-size: 1.75rem;
+  font-weight: 900;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.flecha--ant {
+  left: calc(var(--astro-d) / -2 + 18px);
+}
+
+.flecha--sig {
+  left: calc(var(--astro-d) / 2 - 18px);
+}
+
+.flecha:disabled {
+  opacity: 0.45;
+  filter: grayscale(0.6) brightness(0.8);
+  cursor: not-allowed;
+}

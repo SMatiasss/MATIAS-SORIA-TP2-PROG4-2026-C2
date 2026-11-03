@@ -1,0 +1,42 @@
+.cargando {
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: var(--esp-3);
+  min-height: 100vh;
+  padding: var(--gutter);
+  text-align: center;
+  background: radial-gradient(circle at 50% 60%, var(--bosque), var(--noche) 60%);
+}
+
+.cargando h1 {
+  font-size: var(--fs-l);
+}
+
+.cargando p {
+  color: var(--texto-suave);
+}
+
+/* Spinner: un anillo de fuego que gira alrededor de una llama */
+.fogata {
+  position: relative;
+  width: 5rem;
+  height: 5rem;
+  margin-bottom: var(--esp-3);
+}
+
+.fogata__anillo {
+  position: absolute;
+  inset: 0;
+  border: 4px solid var(--borde);
+  border-top-color: var(--fuego);
+  border-right-color: var(--brasa);
+  border-radius: 50%;
+  animation: giro 0.9s linear infinite;
+}
+
+.fogata__llama {
+  position: absolute;
+  inset: 1.25rem;
+  fill: var(--fuego);
+}

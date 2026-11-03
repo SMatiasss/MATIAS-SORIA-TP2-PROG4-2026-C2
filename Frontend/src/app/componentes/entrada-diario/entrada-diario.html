@@ -1,0 +1,52 @@
+<a
+  class="entrada"
+  [class.entrada--grande]="grande()"
+  [class.tiene-foto]="historia().imagenUrl"
+  [routerLink]="['/publicaciones', historia()._id]"
+>
+  <h3 class="entrada__titulo">{{ historia().titulo }}</h3>
+  <p class="fecha">{{ historia().createdAt | date: 'dd/MM/yyyy HH:mm' }}</p>
+
+  @if (servicio.imagen(historia()); as url) {
+    <figure class="entrada__foto">
+      <span class="foto-pegada">
+        @if (grande()) {
+          <i class="esquinero esquinero--1"></i><i class="esquinero esquinero--2"></i><i class="esquinero esquinero--3"></i><i class="esquinero esquinero--4"></i>
+        }
+        <img [src]="url" />
+      </span>
+      @if (!grande()) {
+        <span class="cinta"></span>
+      }
+    </figure>
+  }
+
+  <p class="entrada__mensaje">{{ historia().mensaje }}</p>
+
+  <div class="entrada__comentarios">
+    @for (comentario of comentarios(); track comentario._id) {
+      <p class="entrada__comentario">
+        <svg viewBox="0 0 24 24"><path d="M4 5h16v10H9l-5 4z" /></svg>
+        <span><strong>{{ comentario.autor.nombreUsuario }}</strong> {{ comentario.mensaje }}</span>
+        @if (total() > 1) {
+          <span class="entrada__mas">y {{ total() - 1 }} {{ total() === 2 ? 'comentario' : 'comentarios' }} más</span>
+        }
+      </p>
+    } @empty {
+      @if (cargados()) {
+        <p class="entrada__comentario">
+          <svg viewBox="0 0 24 24"><path d="M4 5h16v10H9l-5 4z" /></svg>
+          Todavía sin comentarios
+        </p>
+      }
+    }
+  </div>
+
+  <footer class="entrada__pie">
+    <span class="me-gusta">
+      <svg class="malvavisco" [class.malvavisco--encendido]="servicio.dioMeGusta(historia())" viewBox="0 0 64 64"><path d="M23 9H41Q52 9 52 20V44Q52 55 41 55H23Q12 55 12 44V20Q12 9 23 9Z" /><path class="malvavisco__sombra" d="M13.6 46Q32 51 50.4 38V44Q50.4 53.4 41 53.4H23Q13.6 53.4 13.6 44Z" /><path class="malvavisco__arco" d="M18 20Q32 26 46 20" /></svg>
+      {{ historia().cantidadMeGusta }} me gusta
+    </span>
+    <span class="entrada__abrir">Leer completa →</span>
+  </footer>
+</a>

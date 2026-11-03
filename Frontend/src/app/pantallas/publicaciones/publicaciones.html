@@ -1,0 +1,90 @@
+<section class="escena">
+  <header class="encabezado cabecera">
+    <h1>Cielo de historias</h1>
+    <p>Cada estrella es una historia: brilla más al ser más popular.</p>
+  </header>
+
+  <div class="acciones">
+    <button type="button" class="boton" (click)="contar(hoja)">Contar una historia</button>
+    <div class="orden">
+      <button
+        type="button"
+        class="boton boton--secundario boton--chico"
+        [class.activo]="orden() === 'fecha'"
+        title="Ordenar por fecha"
+        (click)="ordenar('fecha')"
+      >
+        Más recientes
+      </button>
+      <button
+        type="button"
+        class="boton boton--secundario boton--chico"
+        [class.activo]="orden() === 'meGusta'"
+        title="Ordenar por cantidad de me gusta"
+        (click)="ordenar('meGusta')"
+      >
+        Más queridas
+      </button>
+    </div>
+  </div>
+
+  @if (estado() === 'cargando') {
+    <div class="aviso"><p>Buscando estrellas…</p></div>
+  } @else if (estado() === 'error') {
+    <div class="aviso">
+      <h2>Se voló la carpa</h2>
+      <p>No pudimos traer las historias. Probá recargar la página en unos minutos.</p>
+    </div>
+  } @else if (!historias().length) {
+    <div class="aviso">
+      @if (paginaVista() > 1) {
+        <h2>No hay más historias</h2>
+        <p>Volvé a la página anterior con la perilla ‹.</p>
+      } @else {
+        <h2>El cielo está vacío</h2>
+        <p>Todavía nadie contó una historia. Contá la primera y encendé una estrella.</p>
+      }
+    </div>
+  }
+
+  <div class="cielo" [class.sale]="fase() === 'sale'" [class.entra]="fase() === 'entra'" [class.atras]="atras()">
+    @for (historia of historias(); track historia._id; let i = $index) {
+      <app-estrella
+        [historia]="historia"
+        [class.tip-abajo]="y(i) < 40"
+        [style.left.%]="x(i)"
+        [style.top.%]="y(i)"
+        [style.--i]="i"
+        (cambio)="cambio($event)"
+        (eliminar)="eliminar($event)"
+      />
+    }
+  </div>
+
+  <div class="astro">
+    <div class="astro__disco">
+      <img class="astro__img" src="escena/publicaciones/astrolabio.webp" />
+      <div class="astro__rueda" [style.rotate.deg]="(1 - pagina()) * 22.5">
+        <img src="escena/publicaciones/astrolabio-anillo.webp" />
+        @for (n of numeros(); track n) {
+          <span
+            class="astro__numero"
+            [class.actual]="n === pagina()"
+            [style.--a]="(n - 1) * 22.5 + 'deg'"
+            >{{ n }}</span
+          >
+        }
+      </div>
+    </div>
+    <span class="astro__marca"></span>
+    <span class="astro__pagina">Página {{ pagina() }}</span>
+    <button type="button" class="flecha flecha--ant" title="Página anterior" [disabled]="pagina() === 1" (click)="irA(pagina() - 1)">‹</button>
+    <button type="button" class="flecha flecha--sig" title="Página siguiente" [disabled]="pagina() >= totalPaginas()" (click)="irA(pagina() + 1)">›</button>
+  </div>
+
+  <dialog #hoja class="hoja" (click)="cerrarAlTocarFuera($event, hoja)" (close)="contando.set(false)">
+    @if (contando()) {
+      <app-contar-historia (contada)="alContar(hoja)" (cancelar)="hoja.close()" />
+    }
+  </dialog>
+</section>

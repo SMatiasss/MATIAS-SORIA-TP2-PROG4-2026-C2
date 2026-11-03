@@ -1,0 +1,60 @@
+.me-gusta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--esp-1);
+  min-height: 2.25rem;
+  padding: 0 var(--esp-3) 0 var(--esp-2);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio-control);
+  background: transparent;
+  color: var(--texto-suave);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background var(--transicion),
+    border-color var(--transicion);
+}
+
+.me-gusta:hover:not(:disabled) {
+  border-color: var(--malvavisco);
+  background: var(--campo);
+}
+
+.me-gusta--dado {
+  border-color: var(--malvavisco);
+  color: var(--malvavisco);
+}
+
+.me-gusta:disabled {
+  cursor: progress;
+  opacity: 0.7;
+}
+
+.me-gusta svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+/* Sobre el papel de la historia abierta: sin borde y en tinta */
+.me-gusta--papel,
+.me-gusta--papel.me-gusta--dado,
+.me-gusta--papel:hover:not(:disabled) {
+  border-color: transparent;
+  color: var(--tinta);
+}
+
+.me-gusta--papel {
+  min-height: 30px;
+  margin-left: calc(-1 * var(--esp-2));
+  border-radius: 15px;
+  font-size: var(--fs-s);
+}
+
+.me-gusta--papel:hover:not(:disabled) {
+  background: var(--tinta-hover);
+}
+
+.me-gusta--papel:not(.me-gusta--dado) .malvavisco {
+  stroke: var(--tinta-placeholder);
+}

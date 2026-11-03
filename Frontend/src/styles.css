@@ -1,0 +1,703 @@
+/* YuruCamp: globales (paleta de identidad-visual.md), base y piezas compartidas. */
+:root {
+  --noche: #0c1a2a;
+  --bosque: #14302f;
+  --bosque-traslucido: rgba(20, 48, 47, 0.28);
+  --tarjeta: rgba(12, 26, 42, 0.78);
+  --texto: #eaf2f5;
+  --luna: #cfe8f2;
+  --fuego: #ff8a3d;
+  --brasa: #e4572e;
+  --malvavisco: #fff7e8;
+  --lago: #1ca7a8;
+  /* Madera del astrolabio de Publicaciones */
+  --madera-clara: #d9a06a;
+  --madera: #b97c4a;
+  --madera-oscura: #6e4122;
+  --madera-honda: #3a2110;
+  /* Malvavisco encendido (me gusta dado): blanco puro para que se vea sobre el papel crema */
+  --malvavisco-relleno: #fff;
+  --malvavisco-borde: #5e3a1c;
+  --malvavisco-sombra: #efe3d0;
+  /* Mi carpa: línea oscura que sombrea el cordón y las tapas del diario */
+  --trama-oscura: rgba(0, 0, 0, 0.1);
+  /* Mi carpa: credencial de campista */
+  --plastico: #f1f5f3;
+  --funda: rgba(234, 242, 245, 0.1);
+  --funda-borde: rgba(234, 242, 245, 0.24);
+  --metal-1: #c9d2d6;
+  --metal-2: #7e8a90;
+  /* Mi carpa: tapas del diario */
+  --tapa-1: #6e4b2f;
+  --tapa-2: #583a24;
+  --tapa-3: #3d2817;
+  --tapa-gastada: #9a7552;
+  --tapa-costura: rgba(236, 208, 160, 0.55);
+  --cinta-marca: #b4452b;
+  --canto-1: #efe3ca;
+  --canto-2: #e0cfae;
+  /* Papel del cuaderno de login y registro */
+  --tinta: #2b2118;
+  --tinta-suave: #7a6a58;
+  --linea: #d9c9ae;
+  --linea-escribir: #b39b74;
+  --tinta-placeholder: #a99a85;
+  --tinta-error: #a03d20;
+  --tinta-enlace: #116465;
+  /* Diario de Mi carpa: resaltador de los títulos y birome roja de los comentarios */
+  --resaltador: rgba(255, 221, 64, 0.55);
+  --tinta-birome: #b3261e;
+  --margen-rojo: rgba(228, 87, 46, 0.45);
+  /* Historia abierta: libro sobre la mesa de aluminio y comentarios escritos en el papel */
+  --mesa-noche: #050d18;
+  --elastico: #24170e;
+  --sombra-mesa: rgba(0, 0, 0, 0.72);
+  --barra-scroll: rgba(122, 106, 88, 0.45);
+  --borde-escrito: rgba(122, 106, 88, 0.55);
+  --tinta-hover: rgba(43, 33, 24, 0.06);
+  --birome-hover: rgba(179, 38, 30, 0.06);
+  --birome-punteado: rgba(179, 38, 30, 0.35);
+  --fuego-suave: rgba(255, 138, 61, 0.1);
+  --cinta: rgba(207, 232, 242, 0.55);
+  --renglon-fondo: rgba(255, 138, 61, 0.07);
+  --renglon-foco: rgba(255, 138, 61, 0.14);
+  --fuego-relieve: #c25f1e;
+  /* Botones de las hojas: rayas diagonales como pintadas con marcador */
+  --marcador: #ffc49a;
+  --rayado: repeating-linear-gradient(-45deg, var(--marcador) 0 2px, transparent 2px 8px);
+  --rayado-hover: repeating-linear-gradient(-45deg, var(--marcador) 0 3px, transparent 3px 6px);
+  --tinta-boton: #8f4416;
+  /* Libro y diario: fuente del papel, tapa de cuero gastada y títulos resaltados */
+  --fuente-papel: Georgia, serif;
+  --cuero:
+    radial-gradient(circle at 0 0, var(--tapa-gastada) 0 10px, transparent 34px),
+    radial-gradient(circle at 100% 0, var(--tapa-gastada) 0 10px, transparent 34px),
+    radial-gradient(circle at 0 100%, var(--tapa-gastada) 0 10px, transparent 34px),
+    radial-gradient(circle at 100% 100%, var(--tapa-gastada) 0 10px, transparent 34px),
+    repeating-linear-gradient(-35deg, var(--trama-oscura) 0 1px, transparent 1px 5px),
+    linear-gradient(160deg, var(--tapa-1), var(--tapa-2) 55%, var(--tapa-3));
+  --resaltado: linear-gradient(to bottom, transparent 0 38%, var(--resaltador) 38% 92%, transparent 92%);
+  --texto-suave: rgba(207, 232, 242, 0.74);
+  --borde: rgba(207, 232, 242, 0.18);
+  --borde-control: rgba(207, 232, 242, 0.42);
+  --campo: rgba(207, 232, 242, 0.07);
+  --velo: rgba(4, 9, 16, 0.78);
+
+  /* Espaciado (base 4px) */
+  --esp-1: 0.25rem;
+  --esp-2: 0.5rem;
+  --esp-3: 0.75rem;
+  --esp-4: 1rem;
+  --esp-5: 1.5rem;
+  --esp-6: 2rem;
+  --esp-7: 3rem;
+  --esp-8: 4rem;
+
+  --radio-tarjeta: 16px;
+  --radio-control: 10px;
+  --alto-control: 2.75rem;
+  --alto-barra: 3.75rem;
+  --ancho-pagina: 72rem;
+  --ancho-form: 25rem;
+  --ancho-cuaderno: 27.5rem;
+  --ancho-cuaderno-registro: 45.75rem;
+  --gutter: var(--esp-5);
+  /* Renglón del papel rayado */
+  --fila: 32px;
+
+  /* Tipografía de sistema */
+  --fuente: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --fs-s: 0.875rem;
+  --fs-base: 1rem;
+  --fs-m: 1.125rem;
+  --fs-l: 1.375rem;
+  --fs-xl: clamp(1.75rem, 1.3rem + 1.8vw, 2.5rem);
+  --fs-xxl: clamp(2.25rem, 6vw, 4.75rem);
+
+  --transicion: 160ms ease;
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--noche);
+  color: var(--texto);
+  font-family: var(--fuente);
+  font-size: var(--fs-base);
+  line-height: 1.55;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+a {
+  color: var(--fuego);
+  text-underline-offset: 3px;
+}
+
+a:hover {
+  color: var(--malvavisco);
+}
+
+img {
+  max-width: 100%;
+}
+
+/* Contenedor de página: un solo margen lateral en todos los anchos */
+.pagina {
+  width: 100%;
+  max-width: calc(var(--ancho-pagina) + 2 * var(--gutter));
+  margin-inline: auto;
+  padding: var(--esp-5) var(--gutter) var(--esp-8);
+}
+
+.encabezado {
+  display: grid;
+  gap: var(--esp-1);
+  margin-bottom: var(--esp-5);
+}
+
+.encabezado h1 {
+  font-size: var(--fs-xl);
+  letter-spacing: -0.02em;
+}
+
+.encabezado p {
+  color: var(--texto-suave);
+  font-size: var(--fs-m);
+}
+
+.tarjeta {
+  background: var(--tarjeta);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio-tarjeta);
+  padding: var(--esp-5);
+}
+
+.boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--esp-2);
+  min-height: var(--alto-control);
+  padding: 0 var(--esp-5);
+  border: 1px solid var(--fuego);
+  border-radius: var(--radio-control);
+  background: var(--fuego);
+  color: var(--noche);
+  font: inherit;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background var(--transicion),
+    border-color var(--transicion),
+    color var(--transicion);
+}
+
+.boton:hover:not(:disabled) {
+  background: var(--malvavisco);
+  border-color: var(--malvavisco);
+  color: var(--noche);
+}
+
+.boton:disabled {
+  cursor: progress;
+  opacity: 0.75;
+}
+
+.boton--secundario {
+  background: transparent;
+  border-color: var(--borde-control);
+  color: var(--texto);
+}
+
+.boton--secundario:hover:not(:disabled) {
+  background: var(--campo);
+  border-color: var(--luna);
+  color: var(--texto);
+}
+
+.boton--peligro {
+  background: var(--brasa);
+  border-color: var(--brasa);
+}
+
+.boton--completo {
+  width: 100%;
+}
+
+.boton--chico {
+  min-height: 2.25rem;
+  padding: 0 var(--esp-4);
+  font-size: var(--fs-s);
+}
+
+/* Estado de carga: el botón muestra un giro mientras se envía el formulario */
+.boton.cargando::before {
+  content: '';
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: giro 0.8s linear infinite;
+}
+
+@keyframes giro {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.malvavisco {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 3;
+  stroke-linejoin: round;
+}
+
+.malvavisco--encendido {
+  fill: var(--malvavisco-relleno);
+  stroke: var(--malvavisco-borde);
+}
+
+.malvavisco__arco {
+  fill: none;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+}
+
+.malvavisco__sombra {
+  fill: none;
+  stroke: none;
+}
+
+.malvavisco--encendido .malvavisco__sombra {
+  fill: var(--malvavisco-sombra);
+}
+
+/* Login y registro: una hoja suelta rayada que aparece sobre la escena de inicio */
+.panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: var(--ancho-cuaderno);
+  max-height: 100%;
+  pointer-events: auto;
+  animation: panel-entrar 0.4s cubic-bezier(0.2, 0.9, 0.3, 1);
+}
+
+/* El registro es más largo que el login: usa renglones más bajos para que entre en pantalla */
+.panel--ancho {
+  --fila: 27px;
+  max-width: var(--ancho-cuaderno-registro);
+}
+
+/* La cinta que sujeta la hoja */
+.panel::before {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  top: -14px;
+  left: 50%;
+  width: 110px;
+  height: 28px;
+  margin-left: -55px;
+  background: var(--cinta);
+  box-shadow: 0 1px 2px var(--velo);
+  rotate: 2deg;
+}
+
+/* La hoja: renglones cada --fila y margen rojo. Cada fila de texto mide --fila para caer sobre un renglón */
+.cuaderno {
+  --renglon-inicio: 12px;
+  min-height: 0;
+  overflow-y: auto;
+  padding: calc(var(--fila) + 12px) 36px var(--fila) 58px;
+  border-radius: 6px 14px 10px 8px;
+  color: var(--tinta);
+  /* Los controles nativos (calendario) se dibujan para fondo claro */
+  color-scheme: light;
+  background:
+    linear-gradient(var(--margen-rojo), var(--margen-rojo)) 40px 0 / 2px 100% no-repeat local,
+    repeating-linear-gradient(transparent 0 calc(var(--fila) - 1px), var(--linea) 0 var(--fila)) 0 var(--renglon-inicio) local,
+    var(--malvavisco);
+  box-shadow:
+    0 2px 0 var(--linea),
+    0 18px 40px var(--velo);
+}
+
+.cuaderno .encabezado {
+  gap: 0;
+  margin-bottom: 0;
+}
+
+.cuaderno .encabezado h1 {
+  font: 700 calc(var(--fila) - 4px) / var(--fila) var(--fuente-papel);
+  letter-spacing: normal;
+}
+
+.cuaderno .encabezado p {
+  color: var(--tinta-suave);
+  font-size: var(--fs-s);
+  line-height: var(--fila);
+}
+
+.panel__volver {
+  display: block;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--tinta-suave);
+  font-family: inherit;
+  font-size: 13px;
+  line-height: var(--fila);
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.panel__pie {
+  text-align: center;
+  color: var(--tinta-suave);
+  font-size: 13px;
+  line-height: var(--fila);
+}
+
+.panel__pie a {
+  color: var(--tinta-enlace);
+  font-weight: 600;
+}
+
+/* El hover global de los enlaces es color papel: sobre el cuaderno se oscurecen en vez de desaparecer */
+.cuaderno a:hover {
+  color: var(--tinta);
+}
+
+@keyframes panel-entrar {
+  from {
+    opacity: 0;
+    transform: translateX(2.5rem);
+  }
+}
+
+.formulario {
+  display: grid;
+}
+
+.formulario--dos-columnas {
+  grid-template-columns: 1fr 1fr;
+  column-gap: 36px;
+}
+
+/* Descripción más baja para que el registro entre en pantalla */
+.cuaderno .formulario--dos-columnas textarea.campo__control {
+  height: calc(var(--fila) * 2);
+}
+
+.formulario--dos-columnas .completo,
+.formulario--dos-columnas .boton {
+  grid-column: 1 / -1;
+}
+
+.formulario--dos-columnas .boton {
+  justify-self: center;
+  width: 60%;
+}
+
+/* Campos sobre papel (hojas y libro): etiqueta, línea para escribir y ayuda, una fila de --fila cada una */
+.cuaderno .campo {
+  display: grid;
+}
+
+.cuaderno .campo__etiqueta {
+  color: var(--tinta-suave);
+  font-size: 13px;
+  line-height: var(--fila);
+}
+
+.campo__control {
+  display: block;
+  width: 100%;
+  height: var(--fila);
+  padding: 0 6px;
+  background: var(--renglon-fondo);
+  border: 0;
+  border-bottom: 2px solid var(--linea-escribir);
+  border-radius: 4px 4px 0 0;
+  color: var(--tinta);
+  font: 500 17px var(--fuente-papel);
+  transition:
+    border-color var(--transicion),
+    background var(--transicion);
+}
+
+.campo__control::placeholder {
+  color: var(--tinta-placeholder);
+  opacity: 0.8;
+}
+
+.campo__control:focus-visible {
+  border-bottom-color: var(--fuego);
+  background-color: var(--renglon-foco);
+  outline: none;
+}
+
+.campo--error .campo__control {
+  border-bottom-color: var(--brasa);
+}
+
+/* La descripción se escribe sobre renglones, igual que el resto de la hoja */
+textarea.campo__control {
+  height: calc(var(--fila) * 3);
+  background:
+    repeating-linear-gradient(transparent 0 calc(var(--fila) - 1px), var(--linea) 0 var(--fila)) local,
+    var(--renglon-fondo);
+  line-height: var(--fila);
+  resize: none;
+}
+
+.cuaderno .campo__pie {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--esp-3);
+  min-height: var(--fila);
+  font-size: 12px;
+  line-height: var(--fila);
+}
+
+.cuaderno .campo__ayuda {
+  color: var(--tinta-suave);
+}
+
+.campo__pie .contador {
+  margin-right: 0;
+  margin-left: auto;
+}
+
+.cuaderno .campo__error {
+  color: var(--tinta-error);
+  font-weight: 600;
+}
+
+/* La fila de la foto ocupa dos renglones justos, para no correr los renglones de abajo */
+.cuaderno .campo-imagen {
+  height: calc(var(--fila) * 2);
+}
+
+/* Foto de perfil: el texto del navegador ("Ningún archivo seleccionado") no entra; la vista previa ya muestra la foto */
+.cuaderno .campo-imagen .campo__control {
+  padding: 0;
+  background: transparent;
+  border-bottom: 0;
+  color: transparent;
+  font: 600 12px system-ui;
+}
+
+.cuaderno .boton {
+  min-height: calc(var(--fila) * 1.5);
+  margin-top: calc(var(--fila) / 2);
+}
+
+/* Papel rayado de la historia abierta: margen rojo a 48px y un renglón cada --fila. "local" hace que las líneas acompañen el scroll */
+.renglones {
+  background:
+    linear-gradient(90deg, transparent 47px, var(--margen-rojo) 47px 49px, transparent 49px) local,
+    repeating-linear-gradient(transparent 0 calc(var(--fila) - 1px), var(--linea) 0 var(--fila)) local,
+    var(--malvavisco);
+}
+
+/* Pie de los comentarios del libro: contador y botones */
+.escrito-pie {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--esp-3);
+  height: var(--fila);
+}
+
+.contador {
+  margin-right: auto;
+  color: var(--tinta-suave);
+  font-size: 13px;
+}
+
+.contador--limite {
+  color: var(--tinta-error);
+  font-weight: 700;
+}
+
+/* Botones chicos sobre el papel */
+.boton-papel {
+  height: 26px;
+  padding: 0 var(--esp-4);
+  border: 0;
+  border-radius: 13px;
+  font: 700 14px var(--fuente);
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    transform 0.12s,
+    background var(--transicion),
+    color var(--transicion),
+    opacity var(--transicion);
+}
+
+/* Botón principal sobre papel, igual en las hojas y en el libro */
+.cuaderno .boton,
+.boton-papel--fuego {
+  border: 2px solid var(--marcador);
+  border-radius: 22px 26px 22px 24px;
+  background: var(--rayado);
+  color: var(--tinta-boton);
+  font-weight: 800;
+}
+
+.cuaderno .boton:hover:not(:disabled),
+.boton-papel--fuego:hover:not(:disabled) {
+  border-color: var(--marcador);
+  background: var(--rayado-hover);
+  color: var(--tinta-boton);
+}
+
+.boton-papel--fuego:disabled {
+  cursor: default;
+  opacity: 0.45;
+}
+
+.boton-papel--suave {
+  background: transparent;
+  color: var(--tinta-suave);
+}
+
+.boton-papel--suave:hover {
+  background: var(--tinta-hover);
+  color: var(--tinta);
+}
+
+/* Botones de los avisos de la historia (no existe, error) */
+.boton-papel--grande {
+  display: inline-flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 22px;
+  border-radius: 20px;
+  font-size: 15px;
+}
+
+.boton-papel--borde {
+  outline: 1.5px solid var(--borde-escrito);
+  outline-offset: -1.5px;
+}
+
+/* Fecha de historias y comentarios, igual en el libro y en el diario */
+.fecha {
+  color: var(--tinta-suave);
+  font: 13px / var(--fila) var(--fuente-papel);
+  white-space: nowrap;
+}
+
+/* Hojas de espiral (sueltas, libro y diario): un agujero cada dos renglones, siempre en el mismo lugar del renglón (--renglon-inicio es donde empiezan las líneas). Se ve lo de atrás a través de la hoja. La segunda capa es un rectángulo enorme para no recortar la sombra */
+.agujeros {
+  mask:
+    radial-gradient(circle at 50% 75%, #000 0 5px, transparent 6px) 10px var(--renglon-inicio, 0px) / 14px calc(var(--fila) * 2) repeat-y,
+    linear-gradient(#000, #000) -100vmax -100vmax / 300vmax 300vmax no-repeat;
+  mask-composite: exclude;
+  mask-clip: no-clip;
+}
+
+/* Página izquierda de un cuaderno abierto: los agujeros van del lado del espiral */
+.agujeros--derecha {
+  mask-position: right 10px top var(--renglon-inicio, 0px), -100vmax -100vmax;
+}
+
+/* Aros del espiral del libro y del diario: cada uno pasa por un agujero de cada página (las páginas empiezan 14px abajo de la tapa y están separadas 10px) */
+.espiral {
+  position: absolute;
+  z-index: 3;
+  left: 50%;
+  top: 14px;
+  bottom: 14px;
+  width: 48px;
+  margin-left: -24px;
+  background:
+    linear-gradient(
+        transparent calc(var(--fila) * 1.5 - 3px),
+        var(--metal-1) 0 calc(var(--fila) * 1.5 - 1px),
+        var(--metal-2) 0 calc(var(--fila) * 1.5 + 3px),
+        transparent 0
+      )
+      0 var(--renglon-inicio, 0px) / 100% calc(var(--fila) * 2) repeat-y;
+  filter: drop-shadow(0 2px 1px var(--velo));
+  pointer-events: none;
+}
+
+/* Foto pegada al papel con esquineros (libro, diario y vista previa al contar una historia); --esquinero es el tamaño de cada uno */
+.foto-pegada {
+  --esquinero: 24px;
+  position: relative;
+  display: block;
+  border: 6px solid var(--plastico);
+  box-shadow: 0 3px 8px var(--trama-oscura);
+}
+
+.foto-pegada img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: var(--noche);
+}
+
+.esquinero {
+  position: absolute;
+  z-index: 1;
+  width: var(--esquinero);
+  height: var(--esquinero);
+  background: var(--tapa-2);
+}
+
+.esquinero--1 {
+  left: calc(var(--esquinero) / -3);
+  top: calc(var(--esquinero) / -3);
+  clip-path: polygon(0 0, 100% 0, 0 100%);
+}
+
+.esquinero--2 {
+  right: calc(var(--esquinero) / -3);
+  top: calc(var(--esquinero) / -3);
+  clip-path: polygon(0 0, 100% 0, 100% 100%);
+}
+
+.esquinero--3 {
+  left: calc(var(--esquinero) / -3);
+  bottom: calc(var(--esquinero) / -3);
+  clip-path: polygon(0 0, 100% 100%, 0 100%);
+}
+
+.esquinero--4 {
+  right: calc(var(--esquinero) / -3);
+  bottom: calc(var(--esquinero) / -3);
+  clip-path: polygon(100% 0, 100% 100%, 0 100%);
+}

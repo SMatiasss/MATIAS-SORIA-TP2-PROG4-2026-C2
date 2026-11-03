@@ -1,0 +1,31 @@
+<div class="cuaderno agujeros">
+  <a class="panel__volver" routerLink="/auth">← Volver al campamento</a>
+
+  <header class="encabezado">
+    <h1>Acampar</h1>
+    <p>Iniciá sesión</p>
+  </header>
+
+  <form class="formulario" [formGroup]="formulario" (ngSubmit)="entrar()">
+    <app-campo
+      idCampo="usuario"
+      etiqueta="Usuario o correo"
+      autocompletar="username"
+      placeholder="tu.usuario o nombre@correo.com"
+      [control]="formulario.controls.usuario"
+    />
+    <app-campo
+      idCampo="contrasena"
+      etiqueta="Contraseña"
+      tipo="password"
+      autocompletar="current-password"
+      [control]="formulario.controls.contrasena"
+    />
+
+    <button type="submit" class="boton boton--completo" [class.cargando]="enviando()" [disabled]="enviando()">
+      {{ enviando() ? 'Entrando…' : 'Entrar al campamento' }}
+    </button>
+  </form>
+
+  <p class="panel__pie">¿Primera vez acá? <a routerLink="/auth/registro">Sumarme al campamento</a></p>
+</div>

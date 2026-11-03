@@ -1,0 +1,121 @@
+<section class="carpa">
+  @if (auth.usuario(); as perfil) {
+    <div class="marco">
+      <header class="encabezado cabecera">
+        <h1>Mi carpa</h1>
+        <p>Tu perfil y tus historias</p>
+      </header>
+
+      <section class="credencial">
+        <div class="cordon"><span>YURUCAMP · YURUCAMP · YURUCAMP · YURUCAMP · YURUCAMP · YURUCAMP · YURUCAMP · YURUCAMP · YURUCAMP ·</span></div>
+        <div class="clip"></div>
+
+        <article class="funda">
+          <span class="funda__ranura"></span>
+          <div class="cred">
+            <div class="cred__cab">
+              <svg viewBox="0 0 24 24"><path d="M12 3 2 21h20zM12 9l-5 12h10z" fill-rule="evenodd" /></svg>
+              Credencial de campista
+            </div>
+
+            <div class="cred__cuerpo">
+              <app-avatar class="cred__foto" [imagenUrl]="perfil.imagenUrl" [tamano]="92" />
+
+              @if (editando()) {
+                <form class="cred__form" [formGroup]="formulario" (ngSubmit)="guardar()">
+                  <div class="cred__fila">
+                    <input class="cred__campo cred__campo--nombre" formControlName="nombre" placeholder="Nombre" />
+                    <input class="cred__campo cred__campo--nombre" formControlName="apellido" placeholder="Apellido" />
+                  </div>
+                  <p class="cred__usuario">&#64;{{ perfil.nombreUsuario }}</p>
+                  <span class="rango" [class.rango--admin]="perfil.perfil === 'administrador'">{{ perfil.perfil }}</span>
+
+                  <dl class="cred__datos">
+                    <div>
+                      <dt>Correo</dt>
+                      <dd>{{ perfil.correo }}</dd>
+                    </div>
+                    <div>
+                      <dt>Fecha de nacimiento</dt>
+                      <dd>
+                        <input
+                          class="cred__campo"
+                          type="date"
+                          formControlName="fechaNacimiento"
+                          [min]="fechaMinima"
+                          [max]="fechaMaxima"
+                        />
+                      </dd>
+                    </div>
+                  </dl>
+
+                  <textarea
+                    class="cred__campo cred__bio"
+                    formControlName="descripcion"
+                    placeholder="Contanos algo sobre vos (opcional)"
+                    maxlength="200"
+                  ></textarea>
+
+                  <div class="cred__acciones">
+                    <button class="cred__cancelar" type="button" (click)="cancelar()">Cancelar</button>
+                    <button class="cred__guardar" type="submit" [disabled]="formulario.invalid || enviando()">
+                      {{ enviando() ? 'Guardando…' : 'Guardar' }}
+                    </button>
+                  </div>
+                </form>
+              } @else {
+                <h2 class="cred__nombre">{{ perfil.nombre }} {{ perfil.apellido }}</h2>
+                <p class="cred__usuario">&#64;{{ perfil.nombreUsuario }}</p>
+                <span class="rango" [class.rango--admin]="perfil.perfil === 'administrador'">{{ perfil.perfil }}</span>
+
+                <dl class="cred__datos">
+                  <div>
+                    <dt>Correo</dt>
+                    <dd>{{ perfil.correo }}</dd>
+                  </div>
+                  <div>
+                    <dt>Fecha de nacimiento</dt>
+                    <dd>{{ perfil.fechaNacimiento | date: 'dd/MM/yyyy' : 'UTC' }}</dd>
+                  </div>
+                </dl>
+
+                @if (perfil.descripcion) {
+                  <p class="cred__bio">{{ perfil.descripcion }}</p>
+                }
+                <button class="cred__actualizar" type="button" (click)="editar()">Actualizar</button>
+              }
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section class="diario">
+        <div class="diario__tapa">
+          <div class="diario__pagina diario__pagina--izq agujeros agujeros--derecha">
+            <div class="diario__titulo"></div>
+            @if (historias().length) {
+              <app-entrada-diario [historia]="historias()[0]" [grande]="true" />
+            } @else if (cargadas()) {
+              <div class="vacio">
+                <h3>Todavía no contaste ninguna historia</h3>
+                <p>Cuando cuentes la primera, va a quedar escrita acá, en tu diario.</p>
+                <a class="boton-papel boton-papel--fuego boton-papel--grande" routerLink="/publicaciones">Ir a Publicaciones</a>
+              </div>
+            }
+            <span class="diario__num">1</span>
+          </div>
+
+          <div class="diario__pagina diario__pagina--der agujeros">
+            @for (historia of historias().slice(1); track historia._id) {
+              <app-entrada-diario [historia]="historia" />
+            }
+            <span class="diario__num">2</span>
+          </div>
+
+          <span class="espiral"></span>
+          <span class="diario__marca"></span>
+        </div>
+      </section>
+    </div>
+  }
+</section>

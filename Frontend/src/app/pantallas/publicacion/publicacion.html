@@ -1,0 +1,116 @@
+<!-- La rueda sobre el fondo (fuera del libro) baja o sube el libro -->
+<div class="fondo" [class.fondo--apagado]="estado() === 'error'" (wheel)="bajo.set($event.deltaY > 0)">
+  <div class="fondo__lienzo">
+    <img class="fondo__img" src="escena/publicacion/mesa.webp" />
+    <video class="fondo__fuego" src="escena/publicacion/mesa-fuego.webm" autoplay loop playsinline [muted]="true"></video>
+  </div>
+</div>
+
+<section class="libro" [class.libro--bajo]="bajo()">
+  <span class="libro__sombra"></span>
+  <div class="libro__tapa">
+    <div class="carilla carilla--izq renglones agujeros agujeros--derecha">
+      <div class="carilla__contenido">
+        @if (historia(); as historia) {
+          <header class="autor">
+            <app-avatar [imagenUrl]="historia.autor.imagenUrl" [tamano]="44" />
+            <div>
+              <p class="autor__nombre">{{ historia.autor.nombre }} {{ historia.autor.apellido }}</p>
+              <p class="autor__usuario">&#64;{{ historia.autor.nombreUsuario }}</p>
+            </div>
+          </header>
+
+          <h1 class="titulo"><span class="titulo__texto">{{ historia.titulo }}</span></h1>
+          <p class="fecha">{{ historia.createdAt | date: 'dd/MM/yyyy HH:mm' }}</p>
+
+          @if (servicio.imagen(historia); as url) {
+            <figure class="foto">
+              <span class="foto-pegada">
+                <i class="esquinero esquinero--1"></i><i class="esquinero esquinero--2"></i><i class="esquinero esquinero--3"></i><i class="esquinero esquinero--4"></i>
+                <img [src]="url" />
+              </span>
+            </figure>
+          }
+
+          <p class="mensaje">{{ historia.mensaje }}</p>
+          <div class="acciones">
+            <app-me-gusta [historia]="historia" [papel]="true" (cambio)="this.historia.set($event)" />
+          </div>
+        } @else if (estado() === 'cargando') {
+          <div class="aviso">
+            <h1 class="aviso__titulo"><span class="titulo__texto puntos">Buscando la historia</span></h1>
+            <div class="esqueleto">
+              <i style="--w: 40%"></i><i style="--w: 92%"></i><i style="--w: 86%"></i><i style="--w: 95%"></i><i style="--w: 60%"></i>
+            </div>
+          </div>
+        } @else if (estado() === 'noExiste') {
+          <div class="aviso">
+            <h1 class="aviso__titulo"><span class="titulo__texto">Esta historia no existe</span></h1>
+            <p class="aviso__texto">Puede que el enlace esté mal escrito o que la hayan eliminado.</p>
+            <div class="aviso__botones">
+              <a class="boton-papel boton-papel--fuego boton-papel--grande" routerLink="/publicaciones">Volver al cielo</a>
+            </div>
+          </div>
+        } @else {
+          <div class="aviso">
+            <h1 class="aviso__titulo"><span class="titulo__texto">Se voló la carpa</span></h1>
+            <p class="aviso__texto">No pudimos traer esta historia. Probá de nuevo en un momento; si sigue pasando, volvé en un rato.</p>
+            <div class="aviso__botones">
+              <button type="button" class="boton-papel boton-papel--fuego boton-papel--grande" (click)="cargar()">Reintentar</button>
+              <a class="boton-papel boton-papel--suave boton-papel--grande boton-papel--borde" routerLink="/publicaciones">Volver al cielo</a>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="carilla carilla--der renglones agujeros">
+      @if (historia()) {
+        <section class="coms">
+          <div class="coms__tope">
+            <header class="coms__cabecera">
+              <h2 class="coms__titulo">Comentarios</h2>
+              <span class="coms__cantidad">{{ total() }}</span>
+            </header>
+
+            <form class="nuevo-comentario" [formGroup]="formulario" (ngSubmit)="comentar()">
+              <textarea class="campo__control" formControlName="mensaje" maxlength="200" placeholder="Escribí un comentario…"></textarea>
+              <div class="escrito-pie">
+                <span class="contador" [class.contador--limite]="largo() === 200">{{ largo() }}/200</span>
+                <button type="submit" class="boton-papel boton-papel--fuego" [disabled]="formulario.invalid || enviando()">
+                  {{ enviando() ? 'Comentando…' : 'Comentar' }}
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <div class="coms__lista renglones">
+            @for (comentario of comentarios(); track comentario._id) {
+              <app-comentario [comentario]="comentario" (cambio)="cambio($event)" />
+            } @empty {
+              @if (comentariosCargados()) {
+                <p class="coms__vacia">Todavía nadie comentó. Sé la primera persona en dejar un comentario.</p>
+              }
+            }
+
+            @if (cargandoComentarios()) {
+              <button type="button" class="cargar-mas" disabled><span class="puntos">Cargando</span></button>
+            } @else if (comentarios().length < total()) {
+              <button type="button" class="cargar-mas" (click)="cargarComentarios()">Cargar más comentarios</button>
+            }
+          </div>
+        </section>
+      }
+    </div>
+
+    <!-- Cinta marcapáginas que asoma por arriba del libro -->
+    <button type="button" class="volver" title="Volver a la pantalla anterior" (click)="volver()">← Volver</button>
+    <div
+      class="libro__asa"
+      [title]="bajo() ? 'Subir el libro' : 'Bajar el libro para ver la fogata'"
+      (click)="bajo.set(!bajo())"
+    ></div>
+    <span class="espiral"></span>
+    <span class="libro__elastico"></span>
+  </div>
+</section>

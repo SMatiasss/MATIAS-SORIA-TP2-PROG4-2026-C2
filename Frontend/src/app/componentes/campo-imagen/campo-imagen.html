@@ -1,0 +1,31 @@
+<div class="campo" [class.campo--error]="error()">
+  <label class="campo__etiqueta" [for]="idCampo()">{{ etiqueta() }}</label>
+
+  <div class="campo-imagen">
+    @if (perfil()) {
+      <app-avatar [imagenUrl]="vistaPrevia()" [tamano]="48" />
+    } @else if (vistaPrevia(); as url) {
+      <span class="foto-pegada miniatura miniatura--foto">
+        <i class="esquinero esquinero--1"></i><i class="esquinero esquinero--2"></i><i class="esquinero esquinero--3"></i><i class="esquinero esquinero--4"></i>
+        <img [src]="url" />
+      </span>
+    } @else {
+      <span class="miniatura"></span>
+    }
+    <input
+      class="campo__control"
+      type="file"
+      accept="image/png,image/jpeg,image/webp"
+      [id]="idCampo()"
+      (input)="cargarImagen($event)"
+    />
+  </div>
+
+  <div class="campo__pie">
+    @if (error()) {
+      <span class="campo__error">{{ error() }}</span>
+    } @else {
+      <span class="campo__ayuda">PNG, JPG o WEBP, hasta 2 MB.</span>
+    }
+  </div>
+</div>

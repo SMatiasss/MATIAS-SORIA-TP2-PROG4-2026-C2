@@ -1,0 +1,459 @@
+/* Historia abierta: un libro apoyado sobre la mesa de aluminio, con la fogata detrás. */
+:host {
+  --ancho-libro: clamp(880px, 78vw, 1120px);
+  --libro-arriba: 26vh;
+  /* El libro sigue por debajo del borde de la pantalla, como si la mesa siguiera hacia vos */
+  --fuera: 56px;
+  --inclinacion-libro: 10deg;
+  /* Alto con el que se dibuja el fondo (proporción de la imagen: 1672 × 941) */
+  --alto-fondo: max(calc(100vw * 941 / 1672), 100vh);
+  /* Libro bajado: su borde de arriba queda justo debajo de la fogata */
+  --libro-arriba-bajo: calc(35vh + var(--alto-fondo) * 0.12 + 28px);
+  --foto-filas: 3;
+  --pad-pagina: var(--fila);
+}
+
+@media (max-height: 820px) {
+  :host {
+    --pad-pagina: 0px;
+  }
+}
+
+@media (min-height: 900px) {
+  :host {
+    --foto-filas: 5;
+  }
+}
+
+@media (min-height: 1000px) {
+  :host {
+    --foto-filas: 6;
+  }
+}
+
+/* Fondo: una sola imagen con la mesa; encima, el video de la fogata en su mismo lugar */
+.fondo {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: var(--mesa-noche);
+  transition: filter 0.6s;
+}
+
+/* El lienzo tiene la proporción de la imagen y siempre tapa la pantalla: la imagen y el video comparten coordenadas */
+.fondo__lienzo {
+  --w: max(100vw, calc(100vh * 1672 / 941));
+  --h: calc(var(--w) * 941 / 1672);
+  position: absolute;
+  left: 50%;
+  top: calc((100vh - var(--h)) * 0.35);
+  width: var(--w);
+  height: var(--h);
+  transform: translateX(-50%);
+}
+
+.fondo__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Solo el recorte de la fogata, con los bordes difuminados sobre la imagen */
+.fondo__fuego {
+  position: absolute;
+  left: 36%;
+  top: 7.9%;
+  width: 27.9%;
+  height: 43.9%;
+  object-fit: cover;
+  mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 55%, transparent 100%);
+}
+
+/* Error: la fogata se apaga */
+.fondo--apagado {
+  filter: brightness(0.4) saturate(0.5);
+}
+
+.fondo--apagado .fondo__fuego {
+  display: none;
+}
+
+/* Libro */
+.libro {
+  position: fixed;
+  left: 50%;
+  top: var(--libro-arriba);
+  bottom: calc(var(--fuera) * -1);
+  width: var(--ancho-libro);
+  margin-left: calc(var(--ancho-libro) / -2);
+  perspective: 1400px;
+  perspective-origin: 50% 40%;
+  transition: top 0.6s cubic-bezier(0.3, 0.7, 0.2, 1);
+}
+
+.libro--bajo {
+  top: var(--libro-arriba-bajo);
+}
+
+/* Con el libro bajado la historia no se desplaza: para leerla completa se vuelve a subir */
+.libro--bajo .carilla--izq {
+  overflow: hidden;
+}
+
+.libro__sombra {
+  position: absolute;
+  left: 3%;
+  right: 3%;
+  bottom: -22px;
+  height: 35%;
+  background: radial-gradient(ellipse 52% 100% at 50% 100%, var(--sombra-mesa), var(--velo) 45%, transparent 72%);
+  filter: blur(10px);
+  pointer-events: none;
+}
+
+.libro__tapa {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 10px;
+  height: 100%;
+  padding: 14px;
+  border-radius: var(--radio-tarjeta);
+  /* De noche, junto a la fogata: el libro un poco más oscuro y cálido */
+  filter: brightness(0.8) sepia(0.14);
+  transform: rotateX(var(--inclinacion-libro));
+  transform-origin: center bottom;
+  background: var(--cuero);
+  box-shadow:
+    0 3px 0 var(--velo),
+    0 10px 18px var(--velo),
+    inset 0 0 26px var(--velo);
+}
+
+.libro__tapa::before {
+  content: '';
+  position: absolute;
+  inset: 5px;
+  border: 2px dashed var(--tapa-costura);
+  border-radius: 12px;
+  pointer-events: none;
+}
+
+/* Borde de arriba: un click baja o sube el libro */
+.libro__asa {
+  position: absolute;
+  z-index: 5;
+  left: 0;
+  right: 0;
+  top: -8px;
+  height: 26px;
+  border-radius: 16px 16px 0 0;
+  cursor: pointer;
+}
+
+
+.libro__elastico {
+  position: absolute;
+  z-index: 4;
+  right: 4px;
+  top: -8px;
+  bottom: -8px;
+  width: 11px;
+  border-radius: 4px;
+  background:
+    repeating-linear-gradient(0deg, var(--trama-oscura) 0 2px, transparent 2px 5px),
+    var(--elastico);
+  box-shadow: -2px 0 4px var(--velo);
+}
+
+/* Cinta marcapáginas que asoma por arriba: es el botón para volver */
+.volver {
+  position: absolute;
+  z-index: 6;
+  left: 9%;
+  top: -86px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 100px;
+  padding: 20px 0 0;
+  border: 0;
+  background: linear-gradient(90deg, var(--cinta-marca), var(--brasa) 30%, var(--brasa) 70%, var(--cinta-marca));
+  color: var(--malvavisco);
+  font: 700 14px var(--fuente);
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  writing-mode: vertical-rl;
+  clip-path: polygon(0 0, 50% 16px, 100% 0, 100% 100%, 0 100%);
+  cursor: pointer;
+  transition: transform 0.25s ease;
+}
+
+.volver::before {
+  content: '';
+  position: absolute;
+  inset: 0 4px;
+  border-inline: 1px dashed var(--tapa-costura);
+}
+
+.volver:hover {
+  transform: translateY(-9px);
+}
+
+/* Las dos carillas del libro abierto */
+.carilla {
+  position: relative;
+  z-index: 2;
+  min-width: 0;
+  height: 100%;
+  overflow: hidden auto;
+  color: var(--tinta);
+  scrollbar-width: thin;
+  scrollbar-color: var(--barra-scroll) transparent;
+}
+
+.carilla--izq {
+  padding: var(--pad-pagina) 36px calc(var(--fila) * 2 + var(--fuera)) 68px;
+  border-radius: 6px 2px 2px 6px;
+  box-shadow:
+    -3px 0 0 var(--canto-1),
+    -6px 1px 0 var(--canto-2);
+}
+
+.carilla--der {
+  display: flex;
+  flex-direction: column;
+  border-radius: 2px 6px 6px 2px;
+  box-shadow:
+    3px 0 0 var(--canto-1),
+    6px 1px 0 var(--canto-2);
+}
+
+.carilla__contenido {
+  max-width: 620px;
+}
+
+/* Autor */
+.autor {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  height: calc(var(--fila) * 2);
+}
+
+.autor app-avatar {
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px var(--fuego);
+}
+
+.autor__nombre {
+  font: 700 17px / var(--fila) var(--fuente-papel);
+}
+
+.autor__usuario {
+  color: var(--tinta-suave);
+  font: 14px / var(--fila) var(--fuente-papel);
+}
+
+/* Título resaltado con marcador, y la fecha debajo */
+.titulo {
+  font: 700 24px / var(--fila) var(--fuente-papel);
+  overflow-wrap: anywhere;
+}
+
+.titulo__texto {
+  margin-left: -6px;
+  padding: 0 6px;
+  border-radius: 3px 8px 4px 9px;
+  background: var(--resaltado);
+  box-decoration-break: clone;
+}
+
+/* Foto pegada: su alto ocupa renglones justos (12px son los dos bordes) */
+.foto {
+  margin: 0;
+  padding: 16px 0;
+}
+
+.foto-pegada img {
+  height: calc(var(--fila) * var(--foto-filas) - 12px);
+}
+
+.mensaje {
+  font: 16px / var(--fila) var(--fuente-papel);
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+
+/* Sin foto, un renglón libre entre la fecha y el mensaje */
+.fecha + .mensaje {
+  margin-top: var(--fila);
+}
+
+.acciones {
+  display: flex;
+  align-items: center;
+  height: var(--fila);
+}
+
+/* Comentarios: arriba el título y el campo para escribir; abajo la lista, que se desplaza */
+.coms {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+
+.coms__tope {
+  flex: none;
+  padding: var(--pad-pagina) 36px 0 68px;
+}
+
+.coms__cabecera {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  height: var(--fila);
+}
+
+.coms__titulo {
+  font: 700 20px / var(--fila) var(--fuente-papel);
+}
+
+.coms__cantidad {
+  color: var(--tinta-suave);
+  font: 15px / var(--fila) var(--fuente-papel);
+}
+
+.nuevo-comentario .campo__control {
+  height: calc(var(--fila) * 2);
+}
+
+.coms__lista {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden auto;
+  padding: 0 36px calc(var(--fila) * 2 + var(--fuera)) 68px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--barra-scroll) transparent;
+}
+
+/* Línea punteada en birome entre un comentario y el siguiente, sin correr los renglones */
+app-comentario + app-comentario::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -2px;
+  border-top: 1.5px dotted var(--birome-punteado);
+}
+
+.coms__vacia {
+  color: var(--tinta-suave);
+  font: 16px / var(--fila) var(--fuente-papel);
+}
+
+.cargar-mas {
+  display: block;
+  width: 100%;
+  height: var(--fila);
+  margin-top: var(--fila);
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  outline: 1.5px dashed var(--borde-escrito);
+  outline-offset: -3px;
+  color: var(--tinta);
+  font: 700 14px var(--fuente);
+  cursor: pointer;
+  transition:
+    background var(--transicion),
+    outline-color var(--transicion);
+}
+
+.cargar-mas:hover:not(:disabled) {
+  background: var(--fuego-suave);
+  outline-color: var(--fuego);
+}
+
+.cargar-mas:disabled {
+  color: var(--tinta-suave);
+  cursor: progress;
+}
+
+/* Puntos suspensivos animados de "Buscando la historia" y "Cargando" */
+.puntos::after {
+  content: '';
+  display: inline-block;
+  width: 1.2em;
+  text-align: left;
+  animation: puntos 1.2s steps(4) infinite;
+}
+
+@keyframes puntos {
+  0% {
+    content: '';
+  }
+  25% {
+    content: '.';
+  }
+  50% {
+    content: '..';
+  }
+  75% {
+    content: '...';
+  }
+}
+
+/* Avisos: cargando, historia inexistente y error */
+.aviso {
+  padding-top: var(--fila);
+}
+
+.aviso__titulo {
+  font: 700 26px / var(--fila) var(--fuente-papel);
+}
+
+.aviso__texto {
+  max-width: 520px;
+  margin-top: var(--fila);
+  color: var(--tinta-suave);
+  font: 17px / var(--fila) var(--fuente-papel);
+}
+
+.aviso__botones {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-3);
+  height: calc(var(--fila) * 2);
+  margin-top: var(--fila);
+}
+
+.esqueleto {
+  margin-top: var(--fila);
+}
+
+.esqueleto i {
+  position: relative;
+  display: block;
+  height: var(--fila);
+}
+
+.esqueleto i::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 10px;
+  width: var(--w, 90%);
+  height: 12px;
+  border-radius: 6px;
+  background: var(--linea);
+  animation: parpadeo 1.4s ease-in-out infinite;
+}
+
+@keyframes parpadeo {
+  50% {
+    opacity: 0.4;
+  }
+}
