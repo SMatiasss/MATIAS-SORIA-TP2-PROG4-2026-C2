@@ -25,7 +25,7 @@ export const imagenValida: ValidatorFn = (control) => {
   const archivo: File | null = control.value;
   if (!archivo) return null;
   if (!TIPOS_IMAGEN.includes(archivo.type)) return { tipoImagen: true };
-  if (archivo.size > 2 * 1024 * 1024) return { pesoImagen: true };
+  if (archivo.size > 1024 * 1024) return { pesoImagen: true };
   return null;
 };
 

@@ -7,5 +7,5 @@ export const OPCIONES_IMAGEN = {
     TIPOS_IMAGEN.includes(archivo.mimetype)
       ? res(null, true)
       : res(new BadRequestException('La imagen tiene que ser PNG, JPG o WEBP'), false),
-  limits: { fileSize: 2 * 1024 * 1024 },
+  limits: { fileSize: 1024 * 1024 },
 };

@@ -1,0 +1,11 @@
+<div class="escena">
+  <div class="lienzo">
+    <video #video class="lienzo__video" src="escena/dashboard/pizarra-giro.webm" preload="auto" playsinline [muted]="true" (ended)="terminarGiro()"></video>
+
+    <button type="button" class="placa" [disabled]="girando()" title="Girar la pizarra" (click)="girar(video)">
+      @if (!girando()) {
+        {{ seccion() === 'usuarios' ? 'Estadísticas' : 'Usuarios' }} ↑
+      }
+    </button>
+  </div>
+</div>

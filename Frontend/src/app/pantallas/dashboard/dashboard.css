@@ -1,0 +1,49 @@
+/* Dashboard: la cabaña con la pizarra giratoria; cada cara de la pizarra es un dashboard */
+.escena {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: var(--madera-honda);
+}
+
+/* El lienzo tiene la proporción del video y siempre tapa la pantalla: la placa se ubica en sus coordenadas */
+.lienzo {
+  --w: max(100vw, calc(100vh * 1284 / 724));
+  --h: calc(var(--w) * 724 / 1284);
+  position: absolute;
+  left: 50%;
+  top: calc((100vh - var(--h)) * 0.35);
+  width: var(--w);
+  height: var(--h);
+  transform: translateX(-50%);
+}
+
+.lienzo__video {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* La placa blanca de arriba de la pizarra: dice a qué dashboard se gira */
+.placa {
+  position: absolute;
+  left: 42.6%;
+  top: 17.5%;
+  width: 12.1%;
+  height: 3.4%;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--tinta);
+  font: 700 calc(var(--h) * 0.019) / 1 var(--fuente-papel);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.placa:hover {
+  color: var(--brasa);
+}
+
+.placa:disabled {
+  cursor: default;
+}

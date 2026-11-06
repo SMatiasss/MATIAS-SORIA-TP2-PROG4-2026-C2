@@ -10,6 +10,11 @@
         <li>
           <a routerLink="/publicaciones" routerLinkActive="activo">Historias</a>
         </li>
+        @if (auth.usuario()?.perfil === 'administrador') {
+          <li>
+            <a routerLink="/dashboard" routerLinkActive="activo" title="Dashboard de administración">Cabaña</a>
+          </li>
+        }
       </ul>
 
       <div class="barra__sesion">

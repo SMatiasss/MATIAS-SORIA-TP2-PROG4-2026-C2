@@ -33,5 +33,11 @@ export const routes: Routes = [
     canActivate: [logueadoGuard],
     loadComponent: () => import('./pantallas/mi-perfil/mi-perfil').then((m) => m.MiPerfil),
   },
+  {
+    path: 'dashboard',
+    title: 'Cabaña · YuruCamp',
+    canActivate: [logueadoGuard],
+    loadComponent: () => import('./pantallas/dashboard/dashboard').then((m) => m.Dashboard),
+  },
   { path: '**', redirectTo: '' },
 ];

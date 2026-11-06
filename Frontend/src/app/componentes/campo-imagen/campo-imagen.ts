@@ -26,7 +26,7 @@ export class CampoImagen {
   error() {
     const control = this.control();
     if (control.hasError('tipoImagen')) return 'La imagen tiene que ser PNG, JPG o WEBP';
-    if (control.hasError('pesoImagen')) return 'La imagen puede pesar hasta 2 MB';
+    if (control.hasError('pesoImagen')) return 'La imagen puede pesar hasta 1 MB';
     return '';
   }
 
