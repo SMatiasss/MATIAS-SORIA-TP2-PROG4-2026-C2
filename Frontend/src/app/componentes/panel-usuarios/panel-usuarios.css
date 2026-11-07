@@ -1,0 +1,157 @@
+/* Escrito sobre la pizarra blanca: todo en em para crecer y achicarse con la pizarra */
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 0.5em 0.9em;
+  overflow: auto;
+  color: var(--tinta);
+}
+
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85em;
+}
+
+.tabla th {
+  padding: 0.2em 0.5em;
+  border-bottom: 2px solid var(--linea-escribir);
+  color: var(--tinta-suave);
+  font-size: 0.85em;
+  text-align: left;
+}
+
+.tabla td {
+  padding: 0.25em 0.5em;
+  border-bottom: 1px solid var(--linea);
+  vertical-align: middle;
+}
+
+.persona {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.persona small {
+  display: block;
+  color: var(--tinta-suave);
+}
+
+/* Una sola línea por dato: así entran seis filas en el panel */
+.persona strong {
+  white-space: nowrap;
+}
+
+.correo {
+  max-width: 13em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.estado {
+  color: var(--tinta-enlace);
+  font-weight: 700;
+}
+
+.estado--baja {
+  color: var(--tinta-birome);
+}
+
+.accion {
+  text-align: right;
+}
+
+/* Centrada: abajo a la derecha está el borrador de la pizarra */
+.paginas {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5em;
+  margin-top: auto;
+  padding-top: 0.3em;
+  color: var(--tinta-suave);
+  font-size: 0.85em;
+}
+
+/* Formulario de alta: tres columnas para que entre en el panel blanco sin desplazarse */
+.formulario {
+  --fila: 1.5em;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 1.2em;
+}
+
+.botones {
+  display: flex;
+  gap: 0.5em;
+}
+
+.descripcion {
+  grid-column: span 2;
+}
+
+.perfil {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 1em;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  line-height: var(--fila);
+}
+
+.perfil legend {
+  width: 100%;
+  padding: 0;
+}
+
+
+/* Cabecera y botones del formulario, escritos con marcador: contorno irregular, sin relleno */
+.escrito .pizarra-titulo {
+  color: var(--tinta-pizarra);
+  font-family: var(--fuente-pizarra);
+  font-weight: 400;
+}
+
+.escrito .pizarra-bajada {
+  color: var(--tinta-pizarra-suave);
+  font-family: var(--fuente-pizarra);
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.trazo {
+  padding: 0.15em 0.9em;
+  border: 2px solid var(--tinta-pizarra);
+  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+  background: none;
+  color: var(--tinta-pizarra);
+  font: 400 0.9em var(--fuente-pizarra);
+  cursor: pointer;
+}
+
+.trazo:hover:not(:disabled) {
+  border-color: var(--brasa);
+  color: var(--brasa);
+}
+
+.trazo--fuego {
+  border-color: var(--brasa);
+  color: var(--brasa);
+}
+
+.trazo:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.perfil label {
+  color: var(--tinta-pizarra);
+  font-family: var(--fuente-pizarra);
+}
+
+.perfil input {
+  accent-color: var(--tinta-pizarra);
+}

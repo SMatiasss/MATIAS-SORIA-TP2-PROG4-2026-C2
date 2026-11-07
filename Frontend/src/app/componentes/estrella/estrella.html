@@ -15,8 +15,17 @@
     <span class="tip__titulo">{{ historia().titulo }}</span>
     <div class="tip__acciones">
       <app-me-gusta [historia]="historia()" (cambio)="cambio.emit($event)" />
-      @if (servicio.esMia(historia())) {
-        <button type="button" class="tip__eliminar" (click)="eliminar.emit(historia())">Eliminar</button>
+      @if (servicio.puedeEliminar(historia())) {
+        <button
+          type="button"
+          class="tip__eliminar"
+          appConfirmar="¿Eliminar esta historia?"
+          [mensajeConfirmar]="'“' + historia().titulo + '” va a dejar de aparecer en el cielo, junto con sus comentarios.'"
+          botonConfirmar="Eliminar"
+          (confirmado)="eliminar.emit(historia())"
+        >
+          Eliminar
+        </button>
       }
       <a class="tip__leer" [routerLink]="['/publicaciones', historia()._id]">Leer →</a>
     </div>

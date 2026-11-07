@@ -27,9 +27,9 @@
     @for (comentario of comentarios(); track comentario._id) {
       <p class="entrada__comentario">
         <svg viewBox="0 0 24 24"><path d="M4 5h16v10H9l-5 4z" /></svg>
-        <span><strong>{{ comentario.autor.nombreUsuario }}</strong> {{ comentario.mensaje }}</span>
+        <span><strong>{{ comentario.autor.nombreUsuario }}</strong> {{ comentario.mensaje | textoCorto: 70 }}</span>
         @if (total() > 1) {
-          <span class="entrada__mas">y {{ total() - 1 }} {{ total() === 2 ? 'comentario' : 'comentarios' }} más</span>
+          <span class="entrada__mas">y {{ total() - 1 | plural: 'comentario' }} más</span>
         }
       </p>
     } @empty {

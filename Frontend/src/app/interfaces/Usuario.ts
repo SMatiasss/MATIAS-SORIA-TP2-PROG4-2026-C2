@@ -24,6 +24,11 @@ export interface ICrearUsuario {
   imagen: File | null;
 }
 
+// Alta desde el dashboard: lo mismo que el registro, más el perfil que elige el administrador.
+export interface IAltaUsuario extends ICrearUsuario {
+  perfil: string;
+}
+
 export interface ILogin {
   usuario: string;
   contrasena: string;

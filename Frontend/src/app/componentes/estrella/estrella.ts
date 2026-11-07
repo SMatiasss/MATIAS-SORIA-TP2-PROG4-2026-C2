@@ -3,9 +3,10 @@ import { RouterLink } from '@angular/router';
 import { MeGusta } from '../me-gusta/me-gusta';
 import { PublicacionesService } from '../../services/publicaciones';
 import IPublicacion from '../../interfaces/Publicacion';
+import { Confirmar } from '../../directivas/confirmar';
 
 @Component({
-  imports: [RouterLink, MeGusta],
+  imports: [RouterLink, MeGusta, Confirmar],
   selector: 'app-estrella',
   styleUrl: './estrella.css',
   templateUrl: './estrella.html',

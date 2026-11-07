@@ -5,9 +5,11 @@ import { Subscription } from 'rxjs';
 import { PublicacionesService } from '../../services/publicaciones';
 import { Modal } from '../../services/modal';
 import IPublicacion, { IComentario } from '../../interfaces/Publicacion';
+import { TextoCortoPipe } from '../../pipes/texto-corto-pipe';
+import { PluralPipe } from '../../pipes/plural-pipe';
 
 @Component({
-  imports: [RouterLink, DatePipe],
+  imports: [RouterLink, DatePipe, TextoCortoPipe, PluralPipe],
   selector: 'app-entrada-diario',
   styleUrl: './entrada-diario.css',
   templateUrl: './entrada-diario.html',

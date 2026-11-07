@@ -1,0 +1,119 @@
+@if (vista() === 'listado') {
+  <header class="pizarra-cabecera">
+    <h2 class="pizarra-titulo">Acampantes <span class="pizarra-bajada">Usuarios · {{ total() | plural: 'cuenta' }}</span></h2>
+    <button type="button" class="boton-papel boton-papel--fuego" (click)="vista.set('formulario')">+ Nuevo usuario</button>
+  </header>
+
+  @if (estado() === 'cargando') {
+    <p class="pizarra-aviso">Buscando acampantes…</p>
+  } @else if (estado() === 'error') {
+    <p class="pizarra-aviso">
+      No pudimos traer los usuarios.
+      <button type="button" class="boton-papel boton-papel--suave" (click)="cargar()">Reintentar</button>
+    </p>
+  } @else {
+    <table class="tabla">
+      <thead>
+        <tr>
+          <th>Usuario</th>
+          <th>Correo</th>
+          <th>Perfil</th>
+          <th>Estado</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (usuario of usuarios(); track usuario._id) {
+          <tr>
+            <td [appInactivo]="!usuario.activo">
+              <span class="persona">
+                <app-avatar [imagenUrl]="usuario.imagenUrl" [tamano]="26" />
+                <span>
+                  <strong>{{ usuario.nombre }} {{ usuario.apellido }}</strong>
+                  <small>&#64;{{ usuario.nombreUsuario }}</small>
+                </span>
+              </span>
+            </td>
+            <td class="correo" [appInactivo]="!usuario.activo" [title]="usuario.correo">{{ usuario.correo }}</td>
+            <td [appInactivo]="!usuario.activo">{{ usuario.perfil === 'administrador' ? 'Administrador' : 'Usuario' }}</td>
+            <td>
+              <span class="estado" [class.estado--baja]="!usuario.activo">{{ usuario.activo ? 'Habilitado' : 'Deshabilitado' }}</span>
+            </td>
+            <td class="accion">
+              @if (usuario.activo) {
+                <button
+                  type="button"
+                  class="boton-papel boton-papel--suave"
+                  appConfirmar="¿Deshabilitar a este usuario?"
+                  [mensajeConfirmar]="'@' + usuario.nombreUsuario + ' no va a poder entrar al campamento hasta que lo vuelvas a habilitar.'"
+                  botonConfirmar="Deshabilitar"
+                  (confirmado)="cambiarActivo(usuario)"
+                >
+                  Deshabilitar
+                </button>
+              } @else {
+                <button type="button" class="boton-papel boton-papel--fuego" (click)="cambiarActivo(usuario)">Habilitar</button>
+              }
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+
+    <nav class="paginas">
+      <button type="button" class="boton-papel boton-papel--suave" [disabled]="pagina() === 1" (click)="irA(pagina() - 1)">← Anterior</button>
+      <span>Página {{ pagina() }} de {{ paginas() }}</span>
+      <button type="button" class="boton-papel boton-papel--suave" [disabled]="pagina() >= paginas()" (click)="irA(pagina() + 1)">Siguiente →</button>
+    </nav>
+  }
+} @else {
+  <header class="pizarra-cabecera escrito">
+    <h2 class="pizarra-titulo">Nuevo acampante <span class="pizarra-bajada">Crear un usuario</span></h2>
+    <div class="botones">
+      <button type="button" class="trazo" (click)="vista.set('listado')">← Volver al listado</button>
+      <!-- Queda arriba, fuera del formulario (form="formulario-alta"): abajo no entra en la pizarra -->
+      <button type="submit" form="formulario-alta" class="trazo trazo--fuego" [disabled]="enviando()">
+        {{ enviando() ? 'Creando usuario…' : 'Crear usuario' }}
+      </button>
+    </div>
+  </header>
+
+  <form id="formulario-alta" class="formulario pizarra-blanca" [formGroup]="formulario" (ngSubmit)="crear()">
+    <app-campo idCampo="alta-nombre" etiqueta="Nombre" [mensajes]="{ pattern: 'Tiene que tener entre 3 y 20 caracteres' }" [control]="formulario.controls.nombre" />
+    <app-campo idCampo="alta-apellido" etiqueta="Apellido" [mensajes]="{ pattern: 'Tiene que tener entre 3 y 20 caracteres' }" [control]="formulario.controls.apellido" />
+    <app-campo
+      idCampo="alta-usuario"
+      etiqueta="Nombre de usuario"
+      placeholder="su.usuario"
+      [mensajes]="{ pattern: 'Solo letras, números, _ y punto, sin espacios' }"
+      [control]="formulario.controls.nombreUsuario"
+    />
+    <app-campo idCampo="alta-correo" etiqueta="Correo" tipo="email" placeholder="nombre@correo.com" [control]="formulario.controls.correo" />
+    <app-campo
+      idCampo="alta-fecha"
+      etiqueta="Fecha de nacimiento"
+      tipo="date"
+      [min]="fechaMinima"
+      [max]="fechaMaxima"
+      [control]="formulario.controls.fechaNacimiento"
+    />
+    <fieldset class="perfil">
+      <legend class="campo__etiqueta">Perfil</legend>
+      <label><input type="radio" formControlName="perfil" value="usuario" /> Usuario</label>
+      <label><input type="radio" formControlName="perfil" value="administrador" /> Administrador</label>
+    </fieldset>
+
+    <app-campo idCampo="alta-contrasena" etiqueta="Contraseña" tipo="password" autocompletar="new-password" [control]="formulario.controls.contrasena" />
+    <app-campo
+      idCampo="alta-repetir"
+      etiqueta="Repetir contraseña"
+      tipo="password"
+      autocompletar="new-password"
+      [control]="formulario.controls.repetirContrasena"
+    />
+    <app-campo-imagen idCampo="alta-imagen" etiqueta="Foto (opcional)" [control]="formulario.controls.imagen" [perfil]="true" />
+
+    <!-- Ocupa dos columnas y no tres: abajo a la derecha está el borrador de la pizarra -->
+    <app-campo class="descripcion" idCampo="alta-descripcion" etiqueta="Descripción breve (opcional)" [limite]="200" [control]="formulario.controls.descripcion" />
+  </form>
+}

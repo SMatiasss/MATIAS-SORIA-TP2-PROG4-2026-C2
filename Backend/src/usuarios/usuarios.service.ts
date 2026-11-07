@@ -1,10 +1,11 @@
-import { ConflictException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, ConflictException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { isValidObjectId, Model } from 'mongoose';
 import { Usuario } from './entities/usuario.entity.js';
 import { RegistroDto } from '../auth/dto/registro.dto.js';
 import { ActualizarPerfilDto } from './dto/actualizar-perfil.dto.js';
 import { CloudinaryService } from '../cloudinary/cloudinary.service.js';
+import { hashear } from '../auth/contrasena.js';
 
 @Injectable()
 export class UsuariosService {
@@ -23,7 +24,8 @@ export class UsuariosService {
     if (existentes.some((u) => u.nombreUsuario === nombreUsuario)) repetidos.push('El nombre de usuario ya está en uso');
     if (repetidos.length) throw new ConflictException(repetidos.join('. '));
 
-    const usuario = new this.usuarioModel(datos);
+    // El registro y el alta del administrador pasan por acá: la contraseña se guarda siempre hasheada.
+    const usuario = new this.usuarioModel({ ...datos, contrasena: await hashear(datos.contrasena) });
     let imagenId: string | null = null;
     if (imagen) {
       const subida = await this.cloudinaryService.subir(imagen, 'perfiles');
@@ -38,6 +40,27 @@ export class UsuariosService {
       if (imagenId) await this.cloudinaryService.borrar(imagenId);
       throw error;
     }
+  }
+
+  async listar(offset = '0', limit = '10') {
+    const desde = Number(offset);
+    const cantidad = Number(limit);
+    if (!Number.isInteger(desde) || desde < 0) {
+      throw new BadRequestException('offset tiene que ser un número entero desde 0');
+    }
+    if (!Number.isInteger(cantidad) || cantidad < 1 || cantidad > 50) {
+      throw new BadRequestException('limit tiene que ser un número entero entre 1 y 50');
+    }
+
+    const usuarios = await this.usuarioModel.find().sort({ createdAt: -1 }).skip(desde).limit(cantidad);
+    return { usuarios, total: await this.usuarioModel.countDocuments() };
+  }
+
+  // Baja y alta lógica: el usuario nunca se borra, solo se marca como deshabilitado.
+  async cambiarActivo(id: string, activo: boolean) {
+    const usuario = await this.buscarPorId(id);
+    usuario.activo = activo;
+    return await usuario.save();
   }
 
   async buscarPorId(id: string) {

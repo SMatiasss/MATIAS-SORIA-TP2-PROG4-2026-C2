@@ -1,0 +1,38 @@
+<header class="pizarra-cabecera">
+  <h2 class="pizarra-titulo">Bitácora del campamento <span class="pizarra-bajada">Estadísticas</span></h2>
+</header>
+
+<nav class="pestanas">
+  @for (grafico of graficos; track grafico.ruta; let i = $index) {
+    <button type="button" class="pestana" [class.pestana--activa]="i === elegido()" (click)="elegir(i)">{{ grafico.titulo }}</button>
+  }
+</nav>
+
+<div class="lapso">
+  <label>
+    Desde
+    <input #desde class="lapso__fecha" type="date" [value]="grafico().desde" [max]="grafico().hasta" (change)="cambiarLapso(desde.value, hasta.value)" />
+  </label>
+  <label>
+    Hasta
+    <input #hasta class="lapso__fecha" type="date" [value]="grafico().hasta" [min]="grafico().desde" (change)="cambiarLapso(desde.value, hasta.value)" />
+  </label>
+  @if (estado() === 'listo') {
+    <span class="lapso__total">{{ total() | plural: grafico().unidad }} en el lapso</span>
+  }
+</div>
+
+<div class="grafico">
+  <!-- El canvas queda siempre en la página: chart.js dibuja sobre él cuando llegan los datos -->
+  <canvas #lienzo [class.oculto]="estado() !== 'listo' || total() === 0"></canvas>
+  @if (estado() === 'cargando') {
+    <p class="pizarra-aviso">Contando…</p>
+  } @else if (estado() === 'error') {
+    <p class="pizarra-aviso">
+      No pudimos traer los datos.
+      <button type="button" class="boton-papel boton-papel--suave" (click)="cargar()">Reintentar</button>
+    </p>
+  } @else if (total() === 0) {
+    <p class="pizarra-aviso">No hubo actividad en ese lapso.</p>
+  }
+</div>

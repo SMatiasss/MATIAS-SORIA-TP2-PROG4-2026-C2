@@ -6,13 +6,15 @@
   background: var(--madera-honda);
 }
 
-/* El lienzo tiene la proporción del video y siempre tapa la pantalla: la placa se ubica en sus coordenadas */
+/* El lienzo tiene la proporción del video y siempre tapa la pantalla: la pizarra se ubica en sus coordenadas */
 .lienzo {
   --w: max(100vw, calc(100vh * 1284 / 724));
   --h: calc(var(--w) * 724 / 1284);
   position: absolute;
   left: 50%;
-  top: calc((100vh - var(--h)) * 0.35);
+  /* Lo que sobra de alto se recorta arriba (el techo, que queda detrás de la barra) para que se vea el piso;
+     pero nunca tanto que la placa de arriba de la pizarra (al 17.5 % del alto) quede tapada por la barra */
+  top: max(calc(100vh - var(--h)), calc(var(--alto-barra) + var(--esp-3) - var(--h) * 0.175));
   width: var(--w);
   height: var(--h);
   transform: translateX(-50%);
@@ -24,13 +26,122 @@
   height: 100%;
 }
 
-/* La placa blanca de arriba de la pizarra: dice a qué dashboard se gira */
+/* Cubre la pizarra entera, de la placa de arriba a la de abajo, y gira sobre su centro (el eje de las perillas).
+   --base es cuánto giró hasta ahora: el video siempre gira para el mismo lado, así que cada vuelta suma otra media vuelta. */
+.pizarra {
+  --perspectiva: calc(var(--w) * 1.01);
+  position: absolute;
+  left: 26.3%;
+  top: 17.5%;
+  width: 45.3%;
+  height: 49.8%;
+  transform-style: preserve-3d;
+  transform: perspective(var(--perspectiva)) rotateX(var(--base, 0deg));
+}
+
+/* El delay negativo salta el comienzo, igual que el video (ver INICIO_GIRO en dashboard.ts) */
+.pizarra--gira {
+  animation: girar 3s linear -0.375s forwards;
+}
+
+/* Medido cuadro por cuadro sobre el video (los dos bordes de la pizarra): el ángulo no sigue una curva de ease,
+   y la pizarra además sube unos px mientras gira, por eso el translateY */
+@keyframes girar {
+  0% {
+    transform: perspective(var(--perspectiva)) translateY(0) rotateX(calc(var(--base, 0deg) - 0deg));
+  }
+  4.17% {
+    transform: perspective(var(--perspectiva)) translateY(calc(var(--h) * 0.0018)) rotateX(calc(var(--base, 0deg) - 7.3deg));
+  }
+  8.33% {
+    transform: perspective(var(--perspectiva)) translateY(calc(var(--h) * 0.0013)) rotateX(calc(var(--base, 0deg) - 11deg));
+  }
+  12.5% {
+    transform: perspective(var(--perspectiva)) translateY(calc(var(--h) * -0.0007)) rotateX(calc(var(--base, 0deg) - 16.9deg));
+  }
+  16.67% {
+    transform: perspective(var(--perspectiva)) translateY(calc(var(--h) * -0.0013)) rotateX(calc(var(--base, 0deg) - 24.9deg));
+  }
+  20.83% {
+    transform: perspective(var(--perspectiva)) translateY(calc(var(--h) * -0.0035)) rotateX(calc(var(--base, 0deg) - 34deg));
+  }
+  25% {
+    transform: perspective(var(--perspectiva)) translateY(calc(var(--h) * -0.0059)) rotateX(calc(var(--base, 0deg) - 43.9deg));
+  }
+  29.17% {
+    transform: perspective(var(--perspectiva)) translateY(calc(var(--h) * -0.0088)) rotateX(calc(var(--base, 0deg) - 54.9deg));
+  }
+  33.33% {
+    transform: perspective(var(--perspectiva)) translateY(calc(var(--h) * -0.0104)) rotateX(calc(var(--base, 0deg) - 66.3deg));
+  }
+  37.5% {
+    transform: perspective(var(--perspectiva)) translateY(calc(var(--h) * -0.0108)) rotateX(calc(var(--base, 0deg) - 78.9deg));
+  }
+  41.67% {
+    transform: perspective(var(--perspectiva)) translateY(calc(var(--h) * -0.0112)) rotateX(calc(var(--base, 0deg) - 91.8deg));
+  }
+  45.83% {
+    transform: perspective(var(--perspectiva)) translateY(calc(var(--h) * -0.0114)) rotateX(calc(var(--base, 0deg) - 103.9deg));
+  }
+  50% {
+    transform: perspective(var(--perspectiva)) translateY(calc(var(--h) * -0.0112)) rotateX(calc(var(--base, 0deg) - 115deg));
+  }
+  54.17% {
+    transform: perspective(var(--perspectiva)) translateY(calc(var(--h) * -0.0096)) rotateX(calc(var(--base, 0deg) - 126.1deg));
+  }
+  58.33% {
+    transform: perspective(var(--perspectiva)) translateY(calc(var(--h) * -0.0077)) rotateX(calc(var(--base, 0deg) - 136.3deg));
+  }
+  62.5% {
+    transform: perspective(var(--perspectiva)) translateY(calc(var(--h) * -0.0056)) rotateX(calc(var(--base, 0deg) - 145.5deg));
+  }
+  66.67% {
+    transform: perspective(var(--perspectiva)) translateY(calc(var(--h) * -0.0031)) rotateX(calc(var(--base, 0deg) - 154.3deg));
+  }
+  70.83% {
+    transform: perspective(var(--perspectiva)) translateY(calc(var(--h) * -0.0015)) rotateX(calc(var(--base, 0deg) - 161.1deg));
+  }
+  75% {
+    transform: perspective(var(--perspectiva)) translateY(calc(var(--h) * -0.0007)) rotateX(calc(var(--base, 0deg) - 167.3deg));
+  }
+  79.17% {
+    transform: perspective(var(--perspectiva)) translateY(calc(var(--h) * 0.0002)) rotateX(calc(var(--base, 0deg) - 172deg));
+  }
+  83.33% {
+    transform: perspective(var(--perspectiva)) translateY(calc(var(--h) * 0.0002)) rotateX(calc(var(--base, 0deg) - 176.4deg));
+  }
+  87.5% {
+    transform: perspective(var(--perspectiva)) translateY(0) rotateX(calc(var(--base, 0deg) - 180deg));
+  }
+  91.67% {
+    transform: perspective(var(--perspectiva)) translateY(0) rotateX(calc(var(--base, 0deg) - 180deg));
+  }
+  95.83% {
+    transform: perspective(var(--perspectiva)) translateY(0) rotateX(calc(var(--base, 0deg) - 180deg));
+  }
+  100% {
+    transform: perspective(var(--perspectiva)) translateY(0) rotateX(calc(var(--base, 0deg) - 180deg));
+  }
+}
+
+.cara {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+}
+
+/* El dorso está dado vuelta: al girar la pizarra queda derecho */
+.cara--dorso {
+  transform: rotateX(180deg);
+}
+
+/* Sobre la placa blanca de arriba: dice a qué dashboard se gira */
 .placa {
   position: absolute;
-  left: 42.6%;
-  top: 17.5%;
-  width: 12.1%;
-  height: 3.4%;
+  left: 36%;
+  top: 0;
+  width: 26.7%;
+  height: 6.83%;
   padding: 0;
   border: 0;
   background: none;
@@ -40,10 +151,20 @@
   cursor: pointer;
 }
 
-.placa:hover {
+.placa:hover:not(:disabled) {
   color: var(--brasa);
 }
 
 .placa:disabled {
   cursor: default;
+}
+
+/* El panel blanco de la pizarra. La letra sigue el alto de la escena: los paneles miden en em */
+.contenido {
+  font-size: calc(var(--h) * 0.017);
+  position: absolute;
+  left: 1.8%;
+  top: 6.8%;
+  width: 96.9%;
+  height: 87.3%;
 }

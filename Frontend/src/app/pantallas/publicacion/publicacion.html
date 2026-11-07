@@ -35,6 +35,18 @@
           <p class="mensaje">{{ historia.mensaje }}</p>
           <div class="acciones">
             <app-me-gusta [historia]="historia" [papel]="true" (cambio)="this.historia.set($event)" />
+            @if (servicio.puedeEliminar(historia)) {
+              <button
+                type="button"
+                class="boton-papel boton-papel--suave eliminar"
+                appConfirmar="¿Eliminar esta historia?"
+                [mensajeConfirmar]="'“' + historia.titulo + '” va a dejar de aparecer en el cielo, junto con sus comentarios.'"
+                botonConfirmar="Eliminar"
+                (confirmado)="eliminar()"
+              >
+                Eliminar historia
+              </button>
+            }
           </div>
         } @else if (estado() === 'cargando') {
           <div class="aviso">

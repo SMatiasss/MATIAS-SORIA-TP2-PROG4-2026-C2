@@ -1,0 +1,77 @@
+/* Escrito sobre la pizarra blanca, en em para seguir su tamaño; abajo deja lugar para el borrador */
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 0.5em 0.9em 1.8em;
+  color: var(--tinta);
+}
+
+/* Las pestañas: un gráfico a la vez, para que se lea grande en el panel blanco */
+.pestanas {
+  display: flex;
+  gap: 0.4em;
+  border-bottom: 2px solid var(--linea-escribir);
+}
+
+.pestana {
+  padding: 0.3em 0.8em;
+  border: 0;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+  background: none;
+  color: var(--tinta-suave);
+  font: 700 0.85em var(--fuente);
+  cursor: pointer;
+}
+
+.pestana:hover {
+  color: var(--tinta);
+}
+
+.pestana--activa {
+  border-bottom-color: var(--fuego);
+  color: var(--tinta);
+}
+
+.lapso {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  padding: 0.4em 0;
+  color: var(--tinta-suave);
+  font-size: 0.8em;
+}
+
+.lapso__fecha {
+  margin-left: 0.3em;
+  padding: 0.1em 0.3em;
+  border: 0;
+  border-bottom: 2px solid var(--linea-escribir);
+  background: var(--renglon-fondo);
+  color: var(--tinta);
+  font: inherit;
+}
+
+.lapso__total {
+  margin-left: auto;
+  color: var(--tinta);
+  font-weight: 700;
+}
+
+/* chart.js toma el tamaño de este contenedor */
+.grafico {
+  position: relative;
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+.grafico canvas {
+  position: absolute;
+  inset: 0;
+}
+
+.oculto {
+  visibility: hidden;
+}

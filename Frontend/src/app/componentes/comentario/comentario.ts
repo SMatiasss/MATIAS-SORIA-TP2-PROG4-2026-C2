@@ -7,9 +7,10 @@ import { PublicacionesService } from '../../services/publicaciones';
 import { Auth } from '../../services/auth';
 import { Modal } from '../../services/modal';
 import { IComentario } from '../../interfaces/Publicacion';
+import { TiempoRelativoPipe } from '../../pipes/tiempo-relativo-pipe';
 
 @Component({
-  imports: [Avatar, DatePipe, ReactiveFormsModule],
+  imports: [Avatar, DatePipe, ReactiveFormsModule, TiempoRelativoPipe],
   selector: 'app-comentario',
   styleUrl: './comentario.css',
   templateUrl: './comentario.html',

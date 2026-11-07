@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { logueadoGuard } from './guards/logueado-guard';
 import { noLogueadoGuard } from './guards/no-logueado-guard';
+import { adminGuard } from './guards/admin-guard';
 
 export const routes: Routes = [
   {
@@ -36,7 +37,7 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     title: 'Cabaña · YuruCamp',
-    canActivate: [logueadoGuard],
+    canActivate: [logueadoGuard, adminGuard],
     loadComponent: () => import('./pantallas/dashboard/dashboard').then((m) => m.Dashboard),
   },
   { path: '**', redirectTo: '' },

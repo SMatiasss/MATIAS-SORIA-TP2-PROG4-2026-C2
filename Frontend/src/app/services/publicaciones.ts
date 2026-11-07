@@ -86,6 +86,11 @@ export class PublicacionesService {
     return historia.autor._id === this.auth.usuario()?._id;
   }
 
+  // El autor puede dar de baja su historia; un administrador, cualquiera (Sprint 4).
+  puedeEliminar(historia: IPublicacion) {
+    return this.esMia(historia) || this.auth.usuario()?.perfil === 'administrador';
+  }
+
   imagen(historia: IPublicacion) {
     const url = historia.imagenUrl;
     if (!url) return null;

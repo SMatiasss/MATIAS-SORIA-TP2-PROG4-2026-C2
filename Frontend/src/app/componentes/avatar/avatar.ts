@@ -1,9 +1,11 @@
-import { Component, computed, input, signal } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 import { environment } from '../../../environments/environment';
+import { ImagenRespaldo } from '../../directivas/imagen-respaldo';
 
 const AVATAR_POR_DEFECTO = '/avatar.svg';
 
 @Component({
+  imports: [ImagenRespaldo],
   selector: 'app-avatar',
   styleUrl: './avatar.css',
   templateUrl: './avatar.html',
@@ -13,18 +15,11 @@ const AVATAR_POR_DEFECTO = '/avatar.svg';
 export class Avatar {
   imagenUrl = input<string | null>(null);
 
-  // Se guarda la URL que falló: si cambia, se vuelve a intentar con la nueva.
-  urlFallida = signal<string | null>(null);
-
   rutaImagen = computed(() => {
     const url = this.imagenUrl();
-    if (!url || url === this.urlFallida()) return AVATAR_POR_DEFECTO;
+    if (!url) return AVATAR_POR_DEFECTO;
     return url.startsWith('/') ? environment.API_URL + url : url;
   });
-
-  alFallar() {
-    this.urlFallida.set(this.imagenUrl());
-  }
 
   // ===== Visual: tamaño en px (el host lo pasa al CSS como --tamano). =====
 

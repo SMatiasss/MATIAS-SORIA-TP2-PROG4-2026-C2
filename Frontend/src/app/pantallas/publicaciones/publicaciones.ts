@@ -69,22 +69,16 @@ export class Publicaciones {
     this.historias.update((lista) => lista.map((h) => (h._id === historia._id ? historia : h)));
   }
 
+  // La confirmación ya la pidió la directiva appConfirmar del botón de la estrella.
   eliminar(historia: IPublicacion) {
-    this.modal.confirmar(
-      '¿Eliminar esta historia?',
-      `"${historia.titulo}" va a dejar de aparecer en el cielo y en tu carpa.`,
-      'Eliminar',
-      () => {
-        this.suscripcion = this.servicio.eliminar(historia._id).subscribe({
-          next: () => {
-            this.modal.exito('Historia eliminada', 'Tu historia ya no aparece en el cielo.');
-            if (this.historias().length === 1 && this.pagina() > 1) this.pagina.update((p) => p - 1);
-            this.cargar();
-          },
-          error: (error) => this.modal.errorHttp(error, 'No pudimos eliminar la historia'),
-        });
+    this.suscripcion = this.servicio.eliminar(historia._id).subscribe({
+      next: () => {
+        this.modal.exito('Historia eliminada', `"${historia.titulo}" ya no aparece en el cielo.`);
+        if (this.historias().length === 1 && this.pagina() > 1) this.pagina.update((p) => p - 1);
+        this.cargar();
       },
-    );
+      error: (error) => this.modal.errorHttp(error, 'No pudimos eliminar la historia'),
+    });
   }
 
   contar(hoja: HTMLDialogElement) {

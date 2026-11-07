@@ -297,6 +297,10 @@
   height: var(--fila);
 }
 
+.eliminar {
+  margin-left: auto;
+}
+
 /* Comentarios: arriba el título y el campo para escribir; abajo la lista, que se desplaza */
 .coms {
   display: flex;

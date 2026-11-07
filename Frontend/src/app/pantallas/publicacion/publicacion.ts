@@ -1,6 +1,6 @@
 import { Component, inject, input, signal } from '@angular/core';
 import { DatePipe, Location } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Avatar } from '../../componentes/avatar/avatar';
@@ -9,12 +9,13 @@ import { Comentario } from '../../componentes/comentario/comentario';
 import { PublicacionesService } from '../../services/publicaciones';
 import { Modal } from '../../services/modal';
 import IPublicacion, { IComentario } from '../../interfaces/Publicacion';
+import { Confirmar } from '../../directivas/confirmar';
 
 // Comentarios que llegan en la primera carga y en cada "cargar más".
 const POR_TANDA = 5;
 
 @Component({
-  imports: [Avatar, MeGusta, Comentario, DatePipe, RouterLink, ReactiveFormsModule],
+  imports: [Avatar, MeGusta, Comentario, DatePipe, RouterLink, ReactiveFormsModule, Confirmar],
   selector: 'app-publicacion',
   styleUrl: './publicacion.css',
   templateUrl: './publicacion.html',
@@ -25,6 +26,7 @@ export class Publicacion {
   servicio = inject(PublicacionesService);
   modal = inject(Modal);
   location = inject(Location);
+  router = inject(Router);
   formBuilder = inject(FormBuilder);
 
   historia = signal<IPublicacion | null>(null);
@@ -112,6 +114,17 @@ export class Publicacion {
 
   volver() {
     this.location.back();
+  }
+
+  // La confirmación ya la pidió la directiva appConfirmar del botón.
+  eliminar() {
+    this.suscripcion = this.servicio.eliminar(this.id() ?? '').subscribe({
+      next: () => {
+        this.router.navigateByUrl('/publicaciones');
+        this.modal.exito('Historia eliminada', 'La historia y sus comentarios ya no aparecen en el cielo.');
+      },
+      error: (error) => this.modal.errorHttp(error, 'No pudimos eliminar la historia'),
+    });
   }
 
   ngOnDestroy() {

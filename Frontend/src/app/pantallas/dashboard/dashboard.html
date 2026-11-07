@@ -2,10 +2,17 @@
   <div class="lienzo">
     <video #video class="lienzo__video" src="escena/dashboard/pizarra-giro.webm" preload="auto" playsinline [muted]="true" (ended)="terminarGiro()"></video>
 
-    <button type="button" class="placa" [disabled]="girando()" title="Girar la pizarra" (click)="girar(video)">
-      @if (!girando()) {
-        {{ seccion() === 'usuarios' ? 'Estadísticas' : 'Usuarios' }} ↑
-      }
-    </button>
+    <!-- Gira junto con la pizarra: cada cara es un dashboard y su contenido va en .contenido -->
+    <section class="pizarra" [class.pizarra--gira]="girando()" [style.--base.deg]="giros() * -180">
+      <div class="cara cara--frente">
+        <button type="button" class="placa" [disabled]="girando()" title="Girar la pizarra" (click)="girar(video)">Estadísticas ↑</button>
+        <div class="contenido"><app-panel-usuarios /></div>
+      </div>
+
+      <div class="cara cara--dorso">
+        <button type="button" class="placa" [disabled]="girando()" title="Girar la pizarra" (click)="girar(video)">Usuarios ↑</button>
+        <div class="contenido"><app-panel-estadisticas /></div>
+      </div>
+    </section>
   </div>
 </div>

@@ -67,6 +67,11 @@
   --rayado: repeating-linear-gradient(-45deg, var(--marcador) 0 2px, transparent 2px 8px);
   --rayado-hover: repeating-linear-gradient(-45deg, var(--marcador) 0 3px, transparent 3px 6px);
   --tinta-boton: #8f4416;
+
+  /* Marcador de pizarra: letra manuscrita del sistema (Segoe Print en Windows, Bradley Hand en Mac) y tinta azul */
+  --fuente-pizarra: 'Segoe Print', 'Bradley Hand', 'Comic Sans MS', cursive;
+  --tinta-pizarra: #1c3a5e;
+  --tinta-pizarra-suave: #5d7894;
   /* Libro y diario: fuente del papel, tapa de cuero gastada y títulos resaltados */
   --fuente-papel: Georgia, serif;
   --cuero:
@@ -426,12 +431,12 @@ img {
   width: 60%;
 }
 
-/* Campos sobre papel (hojas y libro): etiqueta, línea para escribir y ayuda, una fila de --fila cada una */
-.cuaderno .campo {
+/* Campos sobre papel (hojas y libro) y sobre la pizarra del dashboard: etiqueta, línea para escribir y ayuda, una fila de --fila cada una */
+:is(.cuaderno, .pizarra-blanca) .campo {
   display: grid;
 }
 
-.cuaderno .campo__etiqueta {
+:is(.cuaderno, .pizarra-blanca) .campo__etiqueta {
   color: var(--tinta-suave);
   font-size: 13px;
   line-height: var(--fila);
@@ -478,7 +483,7 @@ textarea.campo__control {
   resize: none;
 }
 
-.cuaderno .campo__pie {
+:is(.cuaderno, .pizarra-blanca) .campo__pie {
   display: flex;
   justify-content: space-between;
   gap: var(--esp-3);
@@ -487,7 +492,7 @@ textarea.campo__control {
   line-height: var(--fila);
 }
 
-.cuaderno .campo__ayuda {
+:is(.cuaderno, .pizarra-blanca) .campo__ayuda {
   color: var(--tinta-suave);
 }
 
@@ -496,18 +501,18 @@ textarea.campo__control {
   margin-left: auto;
 }
 
-.cuaderno .campo__error {
+:is(.cuaderno, .pizarra-blanca) .campo__error {
   color: var(--tinta-error);
   font-weight: 600;
 }
 
 /* La fila de la foto ocupa dos renglones justos, para no correr los renglones de abajo */
-.cuaderno .campo-imagen {
+:is(.cuaderno, .pizarra-blanca) .campo-imagen {
   height: calc(var(--fila) * 2);
 }
 
 /* Foto de perfil: el texto del navegador ("Ningún archivo seleccionado") no entra; la vista previa ya muestra la foto */
-.cuaderno .campo-imagen .campo__control {
+:is(.cuaderno, .pizarra-blanca) .campo-imagen .campo__control {
   padding: 0;
   background: transparent;
   border-bottom: 0;
@@ -700,4 +705,87 @@ textarea.campo__control {
   right: calc(var(--esquinero) / -3);
   bottom: calc(var(--esquinero) / -3);
   clip-path: polygon(100% 0, 100% 100%, 0 100%);
+}
+
+/* Dashboard: lo que se escribe sobre la pizarra blanca (paneles de usuarios y estadísticas), en em para seguir su tamaño */
+.pizarra-cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1em;
+  margin-bottom: 0.3em;
+}
+
+.pizarra-titulo {
+  margin: 0;
+  color: var(--tinta-enlace);
+  font: 700 1.35em / 1.1 var(--fuente-papel);
+}
+
+.pizarra-bajada {
+  display: block;
+  color: var(--tinta-suave);
+  font: 600 0.5em var(--fuente);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.pizarra-aviso {
+  margin: auto;
+  color: var(--tinta-suave);
+  font-family: var(--fuente-papel);
+  text-align: center;
+}
+
+/* Formulario escrito a mano sobre la pizarra: sin cajas, solo la línea de abajo trazada con marcador */
+.pizarra-blanca .campo__etiqueta {
+  color: var(--tinta-pizarra-suave);
+  font: 400 0.8em var(--fuente-pizarra);
+}
+
+.pizarra-blanca .campo__control {
+  height: auto;
+  min-height: var(--fila);
+  padding: 0 0.2em;
+  background: none;
+  border-bottom: 2px solid var(--tinta-pizarra);
+  border-bottom-left-radius: 255px 6px;
+  border-bottom-right-radius: 15px 4px;
+  color: var(--tinta-pizarra);
+  font: 400 1em var(--fuente-pizarra);
+}
+
+.pizarra-blanca .campo__control::placeholder {
+  color: var(--tinta-pizarra-suave);
+  opacity: 0.55;
+}
+
+.pizarra-blanca .campo__control:focus-visible {
+  border-bottom-color: var(--brasa);
+  background: none;
+}
+
+.pizarra-blanca .campo__ayuda {
+  color: var(--tinta-pizarra-suave);
+  font-family: var(--fuente-pizarra);
+}
+
+.pizarra-blanca .campo__error {
+  color: var(--tinta-birome);
+  font-family: var(--fuente-pizarra);
+}
+
+form.pizarra-blanca .campo .campo-imagen .campo__control::file-selector-button {
+  padding: 0.1em 0.8em;
+  border: 2px solid var(--tinta-pizarra);
+  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+  background: none;
+  color: var(--tinta-pizarra);
+  font: 400 0.85em var(--fuente-pizarra);
+}
+
+form.pizarra-blanca .campo .campo-imagen .campo__control::file-selector-button:hover {
+  background: none;
+  border-color: var(--brasa);
+  color: var(--brasa);
 }

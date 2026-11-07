@@ -1,7 +1,7 @@
 <div class="comentario__cabecera">
   <app-avatar [imagenUrl]="comentario().autor.imagenUrl" [tamano]="24" />
   <span class="comentario__usuario">&#64;{{ comentario().autor.nombreUsuario }}</span>
-  <span class="fecha comentario__fecha">{{ comentario().createdAt | date: 'dd/MM/yyyy HH:mm' }}</span>
+  <span class="fecha comentario__fecha" [title]="comentario().createdAt | date: 'dd/MM/yyyy HH:mm'">{{ comentario().createdAt | tiempoRelativo }}</span>
   @if (comentario().modificado) {
     <span class="comentario__editado">(editado)</span>
   }
