@@ -37,7 +37,10 @@ export class AuthService {
     }
   }
 
-  refrescar(payload: any) {
+  // Un usuario deshabilitado tampoco puede extender la sesión: si no, con el aviso de los 10 minutos no saldría nunca.
+  async refrescar(payload: any) {
+    const usuario = await this.usuariosService.buscarPorId(payload.id);
+    this.revisarActivo(usuario.activo);
     return { token: this.generarToken(payload.id, payload.perfil) };
   }
 

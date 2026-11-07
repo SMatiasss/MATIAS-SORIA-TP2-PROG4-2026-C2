@@ -132,7 +132,8 @@ export class PanelUsuarios {
         this.enviando.set(false);
         const perfil = usuario.perfil === 'administrador' ? 'administrador' : 'usuario';
         this.modal.exito('Usuario creado', `@${usuario.nombreUsuario} ya es parte del campamento como ${perfil}.`);
-        this.formulario.reset({ perfil: 'usuario' });
+        // reset() deja en null lo que no se nombra: la descripción es opcional y se mandaría el texto "null".
+        this.formulario.reset({ perfil: 'usuario', descripcion: '' });
         this.vista.set('listado');
         this.irA(1);
       },
