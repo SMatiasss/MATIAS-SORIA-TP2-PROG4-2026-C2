@@ -72,6 +72,9 @@
   --fuente-pizarra: 'Segoe Print', 'Bradley Hand', 'Comic Sans MS', cursive;
   --tinta-pizarra: #1c3a5e;
   --tinta-pizarra-suave: #5d7894;
+  --tinta-pizarra-verde: #2f7a4a;
+  --linea-pizarra: rgba(28, 58, 94, 0.25);
+  --relleno-pizarra: rgba(28, 58, 94, 0.12);
   /* Libro y diario: fuente del papel, tapa de cuero gastada y títulos resaltados */
   --fuente-papel: Georgia, serif;
   --cuero:
@@ -788,4 +791,48 @@ form.pizarra-blanca .campo .campo-imagen .campo__control::file-selector-button:h
   background: none;
   border-color: var(--brasa);
   color: var(--brasa);
+}
+
+/* Títulos y botones escritos con marcador en los paneles de la pizarra: contorno irregular, sin relleno */
+.escrito .pizarra-titulo {
+  color: var(--tinta-pizarra);
+  font-family: var(--fuente-pizarra);
+  font-weight: 400;
+}
+
+.escrito .pizarra-bajada {
+  color: var(--tinta-pizarra-suave);
+  font-family: var(--fuente-pizarra);
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.trazo {
+  padding: 0.15em 0.9em;
+  border: 2px solid var(--tinta-pizarra);
+  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+  background: none;
+  color: var(--tinta-pizarra);
+  font: 400 0.9em var(--fuente-pizarra);
+  cursor: pointer;
+}
+
+.trazo:hover:not(:disabled) {
+  border-color: var(--brasa);
+  color: var(--brasa);
+}
+
+.trazo--fuego {
+  border-color: var(--brasa);
+  color: var(--brasa);
+}
+
+.trazo:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.trazo--chico {
+  padding: 0.05em 0.7em;
+  font-size: 0.8em;
 }

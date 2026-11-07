@@ -4,27 +4,29 @@
   flex-direction: column;
   height: 100%;
   padding: 0.5em 0.9em;
-  overflow: auto;
-  color: var(--tinta);
+  overflow: hidden;
+  color: var(--tinta-pizarra);
 }
 
+/* La tabla escrita con marcador: sin cajas, solo el trazo bajo la cabecera y líneas suaves entre filas */
 .tabla {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.85em;
+  font: 400 0.85em var(--fuente-pizarra);
 }
 
 .tabla th {
-  padding: 0.2em 0.5em;
-  border-bottom: 2px solid var(--linea-escribir);
-  color: var(--tinta-suave);
+  padding: 0.1em 0.5em;
+  border-bottom: 2px solid var(--tinta-pizarra);
+  color: var(--tinta-pizarra-suave);
   font-size: 0.85em;
+  font-weight: 400;
   text-align: left;
 }
 
 .tabla td {
-  padding: 0.25em 0.5em;
-  border-bottom: 1px solid var(--linea);
+  padding: 0.05em 0.5em;
+  border-bottom: 1.5px solid var(--linea-pizarra);
   vertical-align: middle;
 }
 
@@ -36,7 +38,8 @@
 
 .persona small {
   display: block;
-  color: var(--tinta-suave);
+  color: var(--tinta-pizarra-suave);
+  line-height: 1.1;
 }
 
 /* Una sola línea por dato: así entran seis filas en el panel */
@@ -52,7 +55,7 @@
 }
 
 .estado {
-  color: var(--tinta-enlace);
+  color: var(--tinta-pizarra-verde);
   font-weight: 700;
 }
 
@@ -72,8 +75,8 @@
   gap: 1.5em;
   margin-top: auto;
   padding-top: 0.3em;
-  color: var(--tinta-suave);
-  font-size: 0.85em;
+  color: var(--tinta-pizarra-suave);
+  font: 400 0.85em var(--fuente-pizarra);
 }
 
 /* Formulario de alta: tres columnas para que entre en el panel blanco sin desplazarse */
@@ -105,46 +108,6 @@
 .perfil legend {
   width: 100%;
   padding: 0;
-}
-
-
-/* Cabecera y botones del formulario, escritos con marcador: contorno irregular, sin relleno */
-.escrito .pizarra-titulo {
-  color: var(--tinta-pizarra);
-  font-family: var(--fuente-pizarra);
-  font-weight: 400;
-}
-
-.escrito .pizarra-bajada {
-  color: var(--tinta-pizarra-suave);
-  font-family: var(--fuente-pizarra);
-  text-transform: none;
-  letter-spacing: 0;
-}
-
-.trazo {
-  padding: 0.15em 0.9em;
-  border: 2px solid var(--tinta-pizarra);
-  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
-  background: none;
-  color: var(--tinta-pizarra);
-  font: 400 0.9em var(--fuente-pizarra);
-  cursor: pointer;
-}
-
-.trazo:hover:not(:disabled) {
-  border-color: var(--brasa);
-  color: var(--brasa);
-}
-
-.trazo--fuego {
-  border-color: var(--brasa);
-  color: var(--brasa);
-}
-
-.trazo:disabled {
-  opacity: 0.5;
-  cursor: default;
 }
 
 .perfil label {

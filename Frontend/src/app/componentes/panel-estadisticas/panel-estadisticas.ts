@@ -98,10 +98,15 @@ export class PanelEstadisticas {
     const datos = this.datos();
     const css = getComputedStyle(document.documentElement);
     const color = (variable: string) => css.getPropertyValue(variable).trim();
-    const paleta = ['--fuego', '--lago', '--brasa', '--tinta-enlace', '--madera', '--madera-clara', '--bosque', '--marcador'].map(color);
+    // Colores de marcador de pizarra: azul, rojo y verde primero.
+    const paleta = ['--tinta-pizarra', '--tinta-birome', '--tinta-pizarra-verde', '--brasa', '--tinta-enlace', '--tinta-pizarra-suave', '--madera', '--madera-clara'].map(color);
+    // Las barras son azules y la línea roja, como dos marcadores distintos.
+    const marcador = grafico.tipo === 'line' ? color('--tinta-birome') : color('--tinta-pizarra');
     const corto = new TextoCortoPipe();
 
-    Chart.defaults.color = color('--tinta');
+    Chart.defaults.color = color('--tinta-pizarra');
+    Chart.defaults.borderColor = color('--linea-pizarra');
+    Chart.defaults.font.family = color('--fuente-pizarra');
     const configuracion: any = {
       type: grafico.tipo,
       data: {
@@ -113,9 +118,12 @@ export class PanelEstadisticas {
           {
             label: grafico.titulo,
             data: datos.map((dato) => dato.cantidad),
-            backgroundColor: grafico.tipo === 'pie' ? datos.map((_, i) => paleta[i % paleta.length]) : color('--fuego'),
-            borderColor: grafico.tipo === 'pie' ? color('--malvavisco') : color('--brasa'),
-            borderWidth: 2,
+            // Trazo grueso y casi sin relleno, como dibujado con marcador; la torta sí va pintada para distinguir las porciones.
+            backgroundColor:
+              grafico.tipo === 'pie' ? datos.map((_, i) => paleta[i % paleta.length]) : grafico.tipo === 'bar' ? color('--relleno-pizarra') : marcador,
+            borderColor: grafico.tipo === 'pie' ? color('--malvavisco-relleno') : marcador,
+            borderWidth: grafico.tipo === 'pie' ? 2 : 3,
+            pointRadius: 3,
             tension: 0.3,
           },
         ],

@@ -1,7 +1,7 @@
 @if (vista() === 'listado') {
-  <header class="pizarra-cabecera">
+  <header class="pizarra-cabecera escrito">
     <h2 class="pizarra-titulo">Acampantes <span class="pizarra-bajada">Usuarios · {{ total() | plural: 'cuenta' }}</span></h2>
-    <button type="button" class="boton-papel boton-papel--fuego" (click)="vista.set('formulario')">+ Nuevo usuario</button>
+    <button type="button" class="trazo trazo--fuego" (click)="vista.set('formulario')">+ Nuevo usuario</button>
   </header>
 
   @if (estado() === 'cargando') {
@@ -9,7 +9,7 @@
   } @else if (estado() === 'error') {
     <p class="pizarra-aviso">
       No pudimos traer los usuarios.
-      <button type="button" class="boton-papel boton-papel--suave" (click)="cargar()">Reintentar</button>
+      <button type="button" class="trazo" (click)="cargar()">Reintentar</button>
     </p>
   } @else {
     <table class="tabla">
@@ -43,7 +43,7 @@
               @if (usuario.activo) {
                 <button
                   type="button"
-                  class="boton-papel boton-papel--suave"
+                  class="trazo trazo--chico"
                   appConfirmar="¿Deshabilitar a este usuario?"
                   [mensajeConfirmar]="'@' + usuario.nombreUsuario + ' no va a poder entrar al campamento hasta que lo vuelvas a habilitar.'"
                   botonConfirmar="Deshabilitar"
@@ -52,7 +52,7 @@
                   Deshabilitar
                 </button>
               } @else {
-                <button type="button" class="boton-papel boton-papel--fuego" (click)="cambiarActivo(usuario)">Habilitar</button>
+                <button type="button" class="trazo trazo--chico trazo--fuego" (click)="cambiarActivo(usuario)">Habilitar</button>
               }
             </td>
           </tr>
@@ -61,9 +61,9 @@
     </table>
 
     <nav class="paginas">
-      <button type="button" class="boton-papel boton-papel--suave" [disabled]="pagina() === 1" (click)="irA(pagina() - 1)">← Anterior</button>
+      <button type="button" class="trazo trazo--chico" [disabled]="pagina() === 1" (click)="irA(pagina() - 1)">← Anterior</button>
       <span>Página {{ pagina() }} de {{ paginas() }}</span>
-      <button type="button" class="boton-papel boton-papel--suave" [disabled]="pagina() >= paginas()" (click)="irA(pagina() + 1)">Siguiente →</button>
+      <button type="button" class="trazo trazo--chico" [disabled]="pagina() >= paginas()" (click)="irA(pagina() + 1)">Siguiente →</button>
     </nav>
   }
 } @else {

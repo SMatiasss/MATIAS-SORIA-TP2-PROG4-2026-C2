@@ -4,14 +4,17 @@
   flex-direction: column;
   height: 100%;
   padding: 0.5em 0.9em 1.8em;
-  color: var(--tinta);
+  color: var(--tinta-pizarra);
+  font-family: var(--fuente-pizarra);
 }
 
 /* Las pestañas: un gráfico a la vez, para que se lea grande en el panel blanco */
 .pestanas {
   display: flex;
   gap: 0.4em;
-  border-bottom: 2px solid var(--linea-escribir);
+  border-bottom: 2px solid var(--tinta-pizarra);
+  border-bottom-left-radius: 255px 6px;
+  border-bottom-right-radius: 15px 4px;
 }
 
 .pestana {
@@ -20,18 +23,18 @@
   border-bottom: 3px solid transparent;
   margin-bottom: -2px;
   background: none;
-  color: var(--tinta-suave);
-  font: 700 0.85em var(--fuente);
+  color: var(--tinta-pizarra-suave);
+  font: 400 0.85em var(--fuente-pizarra);
   cursor: pointer;
 }
 
 .pestana:hover {
-  color: var(--tinta);
+  color: var(--tinta-pizarra);
 }
 
 .pestana--activa {
-  border-bottom-color: var(--fuego);
-  color: var(--tinta);
+  border-bottom-color: var(--brasa);
+  color: var(--tinta-pizarra);
 }
 
 .lapso {
@@ -39,23 +42,26 @@
   align-items: center;
   gap: 1em;
   padding: 0.4em 0;
-  color: var(--tinta-suave);
+  color: var(--tinta-pizarra-suave);
   font-size: 0.8em;
 }
 
+/* Como los campos del formulario de alta: sin caja, solo la línea de marcador */
 .lapso__fecha {
   margin-left: 0.3em;
-  padding: 0.1em 0.3em;
+  padding: 0 0.2em;
   border: 0;
-  border-bottom: 2px solid var(--linea-escribir);
-  background: var(--renglon-fondo);
-  color: var(--tinta);
+  border-bottom: 2px solid var(--tinta-pizarra);
+  border-bottom-left-radius: 255px 6px;
+  border-bottom-right-radius: 15px 4px;
+  background: none;
+  color: var(--tinta-pizarra);
   font: inherit;
 }
 
 .lapso__total {
   margin-left: auto;
-  color: var(--tinta);
+  color: var(--tinta-pizarra);
   font-weight: 700;
 }
 
