@@ -74,7 +74,7 @@ export class Auth {
   iniciarContador() {
     clearTimeout(this.temporizador);
     const desde = Number(localStorage.getItem('tokenDesde'));
-    this.temporizador = setTimeout(() => this.avisarVencimiento(), desde + 10 * 60 * 1000 - Date.now());
+    this.temporizador = setTimeout(() => this.avisarVencimiento(), desde + 3 * 60 * 1000 - Date.now());
   }
 
   avisarVencimiento() {
