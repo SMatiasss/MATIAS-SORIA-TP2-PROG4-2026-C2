@@ -29,6 +29,11 @@ export class Dashboard {
   girar(video: HTMLVideoElement) {
     this.girando.set(true);
     this.cambiarSeccion();
+    // En celular el video está oculto (no hay giro): algunos navegadores no lo reproducen y la placa quedaría trabada.
+    if (video.offsetParent === null) {
+      this.terminarGiro();
+      return;
+    }
     video.currentTime = INICIO_GIRO;
     video.play();
   }

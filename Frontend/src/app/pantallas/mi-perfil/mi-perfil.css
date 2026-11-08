@@ -474,3 +474,34 @@ app-entrada-diario + app-entrada-diario::before {
 .vacio .boton-papel {
   margin-top: calc(var(--fila) / 2);
 }
+
+/* Celular: credencial arriba y diario abajo, en una sola columna */
+@media (max-width: 899px) {
+  .marco {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 0 var(--esp-3) var(--esp-6);
+  }
+
+  .marco > * {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .credencial {
+    justify-self: center;
+    width: min(330px, 100%);
+  }
+
+  /* El diario abierto no entra: sus dos páginas van una debajo de la otra */
+  .diario__tapa {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 10px;
+    padding: 10px;
+  }
+
+  .cordon,
+  .diario__marca,
+  .diario .espiral {
+    display: none;
+  }
+}

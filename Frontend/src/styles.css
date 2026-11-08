@@ -836,3 +836,24 @@ form.pizarra-blanca .campo .campo-imagen .campo__control::file-selector-button:h
   padding: 0.05em 0.7em;
   font-size: 0.8em;
 }
+
+/* Celular (por debajo de los anchos de escritorio): hojas al ancho de la pantalla y formularios en una columna */
+@media (max-width: 899px) {
+  :root {
+    --gutter: var(--esp-3);
+    --ancho-cuaderno: calc(100vw - 1.5rem);
+    --ancho-cuaderno-registro: calc(100vw - 1.5rem);
+  }
+
+  .cuaderno {
+    padding-right: var(--esp-4);
+  }
+
+  .formulario--dos-columnas {
+    grid-template-columns: 1fr;
+  }
+
+  .formulario--dos-columnas .boton {
+    width: 100%;
+  }
+}

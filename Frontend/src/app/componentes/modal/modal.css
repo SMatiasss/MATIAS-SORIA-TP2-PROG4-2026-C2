@@ -59,3 +59,9 @@
   margin: 0;
   padding-left: var(--esp-5);
 }
+
+@media (max-width: 899px) {
+  .modal {
+    width: calc(100vw - 2rem);
+  }
+}

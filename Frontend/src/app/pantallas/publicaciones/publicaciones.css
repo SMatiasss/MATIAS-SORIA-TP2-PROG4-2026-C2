@@ -230,3 +230,33 @@
   filter: grayscale(0.6) brightness(0.8);
   cursor: not-allowed;
 }
+
+/* Celular: el título ocupa el ancho y los botones van debajo, en una fila */
+@media (max-width: 899px) {
+  /* Si la pantalla es baja, la escena se alarga y se desplaza: las estrellas necesitan su lugar entre los botones y el astrolabio */
+  .escena {
+    --astro-d: 240px;
+    height: max(100vh, 48rem);
+  }
+
+  .cielo {
+    top: 9rem;
+    bottom: calc(var(--astro-d) * 0.75);
+  }
+
+  .cabecera {
+    left: var(--esp-4);
+    right: var(--esp-4);
+    top: calc(var(--alto-barra) + 1px + var(--esp-3));
+    max-width: none;
+  }
+
+  .acciones {
+    left: var(--esp-4);
+    right: var(--esp-4);
+    top: calc(var(--alto-barra) + 1px + 7.5rem);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+}

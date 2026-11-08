@@ -118,3 +118,34 @@
 .perfil input {
   accent-color: var(--tinta-pizarra);
 }
+
+/* Celular: el panel crece con su contenido, la tabla se desplaza de costado y el formulario va en una columna */
+@media (max-width: 899px) {
+  :host {
+    height: auto;
+    overflow: visible;
+  }
+
+  .pizarra-cabecera {
+    flex-wrap: wrap;
+  }
+
+  .tabla {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .formulario {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .descripcion {
+    grid-column: auto;
+  }
+
+  .paginas {
+    gap: var(--esp-2);
+    white-space: nowrap;
+  }
+}

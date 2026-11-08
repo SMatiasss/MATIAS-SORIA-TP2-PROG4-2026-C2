@@ -81,3 +81,20 @@
 .oculto {
   visibility: hidden;
 }
+
+/* Celular: el panel crece con su contenido y el gráfico tiene un alto fijo */
+@media (max-width: 899px) {
+  :host {
+    height: auto;
+  }
+
+  .pestanas,
+  .lapso {
+    flex-wrap: wrap;
+  }
+
+  .grafico {
+    flex: none;
+    height: 320px;
+  }
+}

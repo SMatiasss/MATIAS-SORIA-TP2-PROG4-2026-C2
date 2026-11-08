@@ -95,3 +95,37 @@
 .barra__usuario.activo {
   color: var(--fuego);
 }
+
+/* Celular: sin el nombre de la app ni el del usuario, para que la barra entre en la pantalla */
+@media (max-width: 899px) {
+  .barra__interior {
+    gap: var(--esp-1);
+    padding-inline: var(--esp-2);
+  }
+
+  .marca span {
+    display: none;
+  }
+
+  .barra__enlaces {
+    margin-left: var(--esp-1);
+  }
+
+  .barra__enlaces a {
+    padding-inline: var(--esp-1);
+    font-size: 0.9rem;
+  }
+
+  .barra__sesion {
+    gap: var(--esp-2);
+  }
+
+  .barra__usuario {
+    font-size: 0;
+  }
+
+  .barra__sesion .boton {
+    padding-inline: var(--esp-2);
+    font-size: 0.75rem;
+  }
+}

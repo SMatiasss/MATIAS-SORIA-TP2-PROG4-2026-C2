@@ -168,3 +168,66 @@
   width: 96.9%;
   height: 87.3%;
 }
+
+/* Celular: la cabaña no entra legible, así que la pizarra queda plana, a todo el ancho, mostrando solo la cara elegida */
+@media (max-width: 899px) {
+  .escena {
+    position: static;
+    min-height: calc(100vh - var(--alto-barra));
+    overflow: visible;
+  }
+
+  .lienzo {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: var(--esp-3);
+    transform: none;
+  }
+
+  .lienzo__video {
+    display: none;
+  }
+
+  .pizarra,
+  .pizarra--gira {
+    position: static;
+    width: auto;
+    height: auto;
+    transform: none;
+    animation: none;
+  }
+
+  .cara,
+  .cara--dorso {
+    position: static;
+    transform: none;
+    padding: var(--esp-2);
+    border-radius: var(--radio-tarjeta);
+    background: var(--plastico);
+  }
+
+  .pizarra:not(.pizarra--estadisticas) .cara--dorso,
+  .pizarra--estadisticas .cara--frente {
+    display: none;
+  }
+
+  .placa {
+    position: static;
+    display: block;
+    width: auto;
+    height: auto;
+    margin: 0 auto var(--esp-2);
+    padding: var(--esp-1) var(--esp-4);
+    border: 2px solid var(--tinta-pizarra);
+    border-radius: var(--radio-control);
+    font-size: 1rem;
+  }
+
+  .contenido {
+    position: static;
+    width: auto;
+    height: auto;
+    font-size: 15px;
+  }
+}

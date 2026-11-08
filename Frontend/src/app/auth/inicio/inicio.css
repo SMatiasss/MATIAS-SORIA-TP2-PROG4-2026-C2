@@ -475,3 +475,27 @@
     opacity: 0;
   }
 }
+
+/* Celular (pantalla angosta): la escena se centra en la carpa, que es lo que hay que tocar para entrar */
+@media (max-width: 899px) {
+  .mundo,
+  .con-panel .mundo {
+    transform: translateX(calc(var(--w) * -0.1265));
+  }
+
+  .titular {
+    top: 10%;
+    left: var(--esp-4);
+    right: var(--esp-4);
+    max-width: none;
+  }
+
+  .titular h1 {
+    font-size: 2.4rem;
+  }
+
+  .capa--panel {
+    justify-content: center;
+    padding: var(--esp-3);
+  }
+}

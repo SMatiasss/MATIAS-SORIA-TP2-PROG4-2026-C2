@@ -461,3 +461,41 @@ app-comentario + app-comentario::before {
     opacity: 0.4;
   }
 }
+
+/* Celular: el libro deja de estar apoyado en la mesa; sus dos páginas van una debajo de la otra y la pantalla se desplaza */
+@media (max-width: 899px) {
+  .libro,
+  .libro--bajo {
+    position: relative;
+    left: auto;
+    top: auto;
+    bottom: auto;
+    width: auto;
+    margin: calc(var(--esp-8) + var(--esp-4)) var(--esp-2) var(--esp-4);
+    perspective: none;
+  }
+
+  .libro__tapa {
+    grid-template-columns: 1fr;
+    row-gap: 10px;
+    height: auto;
+    transform: none;
+  }
+
+  .libro__sombra,
+  .libro__asa,
+  .libro__elastico,
+  .espiral {
+    display: none;
+  }
+
+  .carilla {
+    height: auto;
+    max-height: none;
+    overflow: visible;
+  }
+
+  .coms__lista {
+    max-height: 60vh;
+  }
+}
