@@ -51,7 +51,7 @@ export class AuthService {
       id,
       perfil,
       iat: fechaActual,
-      exp: fechaActual + 60 * 15,
+      exp: fechaActual + 60 * 5,
     };
 
     return jwt.sign(payload, process.env.CONTRASENA_DEL_SERVER ?? '', { issuer: 'YuruCamp' });
